@@ -39,12 +39,17 @@ class RegisterBusiness extends Component {
             alternatePhone: '',
             serviceType: '',
         })
+        this.props.history.push('/home');
+    }
+
+    handleClickNext = () => {
+        this.props.history.push('/register/new/employee');
     }
 
     render() {
         return (
             <div>
-                <form className="register-form">
+                <form className="register-business-form">
                     <h1>Register Your Business</h1>
                     <label>
                         Business Name
@@ -102,7 +107,7 @@ class RegisterBusiness extends Component {
                     </label>
                     <br />
                     <button onClick={this.handleClickCancel}>Cancel</button>
-                    <button>Next</button>
+                    <button onClick={this.handleClickNext}>Next</button>
                 </form>
                 <pre>{JSON.stringify(this.state, null, 2)}</pre>
             </div>

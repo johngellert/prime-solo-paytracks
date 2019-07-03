@@ -52,12 +52,17 @@ class RegisterAddEmployee extends Component {
             maritalStatus: 'Single',
             employerPaysEmployeesFica: false,
         })
+        this.props.history.push('/home');
+    }
+
+    handleClickNext = () => {
+        this.props.history.push('/home');
     }
 
     render() {
         return (
             <div>
-                <form className="register-form">
+                <form className="register-employee-form">
                     <h1>Add Employee</h1>
                     <label>
                         First Name
@@ -145,7 +150,7 @@ class RegisterAddEmployee extends Component {
                     </label>
                     <br />
                     <button onClick={this.handleClickCancel}>Cancel</button>
-                    <button>Next</button>
+                    <button onClick={this.handleClickNext}>Next</button>
                 </form>
                 <pre>{JSON.stringify(this.state, null, 2)}</pre>
             </div>
