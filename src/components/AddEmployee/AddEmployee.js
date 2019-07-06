@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import Switch from '@material-ui/core/Switch';
 
 import { connect } from 'react-redux';
 
-import './RegisterAddEmployee.css'
+import './AddEmployee.css'
 
 class RegisterAddEmployee extends Component {
 
@@ -26,13 +27,50 @@ class RegisterAddEmployee extends Component {
         employerPaysEmployeesFica: false,
     }
 
+    // componentDidUpdate() {
+    //     this.setState({
+    //         employerPaysEmployeesFica: this.state.taxableEmployee && this.state.employerPaysEmployeesFica || false,
+    //     });
+    // }
+
     handleChangeInput = (propertyName) => (event) => {
         this.setState({
             [propertyName]: event.target.value,
-        })
+        });
     }
 
-    handleClickCancel = () => {
+    // handleChangeSwitch = (propertyName) => () => {
+    //     this.setState({
+    //         [propertyName]: !this.state[propertyName],
+    //         employerPaysEmployeesFica: this.state.taxableEmployee ? this.state.employerPaysEmployeesFica : false,
+    //     });
+    // }
+
+    handleChangeSwitchTaxable = () => {
+        
+        // if condition is true, set the taxableEmployee to false and the employerPaysEmployeeFica to false
+        // else, only set the taxableEmployee to the opposite value of its current value
+        if (this.state.taxableEmployee) {
+            this.setState({
+                taxableEmployee: !this.state.taxableEmployee,
+                employerPaysEmployeesFica: false,
+            });
+        } else {
+            this.setState({
+                taxableEmployee: !this.state.taxableEmployee,
+            });
+        }
+
+    }
+
+    handleChangeSwitchFica = () => {
+        this.setState({
+            employerPaysEmployeesFica: !this.state.employerPaysEmployeesFica,
+
+        });
+    }
+
+    handleClickSkip = () => {
         this.setState({
             firstName: '',
             lastName: '',
@@ -64,12 +102,12 @@ class RegisterAddEmployee extends Component {
             <div>
                 <form className="register-employee-form">
                     <h1>Add Employee</h1>
-                    <label>
+                    <label className="required-field">
                         First Name
                     <input onChange={this.handleChangeInput('firstName')}></input>
                     </label>
                     <br />
-                    <label>
+                    <label className="required-field">
                         Last Name
                     <input onChange={this.handleChangeInput('lastName')}></input>
                     </label>
@@ -104,52 +142,56 @@ class RegisterAddEmployee extends Component {
                     <input onChange={this.handleChangeInput('alternatePhone')}></input>
                     </label>
                     <br />
-                    <label>
+                    <label className="required-field">
                         Email Address
                     <input onChange={this.handleChangeInput('emailAddress')}></input>
                     </label>
                     <br />
-                    <label>
+                    <label className="required-field">
                         Assign Business
                     <input onChange={this.handleChangeInput('assignedBusiness')}></input>
                     </label>
                     <br />
-                    <label>
+                    <label className="required-field">
                         Is Taxable
-                    <input onChange={this.handleChangeInput('taxableEmployee')}></input>
+                    <Switch onChange={this.handleChangeSwitchTaxable} />
                     </label>
+                    {this.state.taxableEmployee &&
+                        <>
+                            <br />
+                            <label className="required-field">
+                                Social Security
+                        <input onChange={this.handleChangeInput('socialSecurity')}></input>
+                            </label>
+                            <br />
+                            <label className="required-field">
+                                Date of Birth
+                        <input onChange={this.handleChangeInput('dob')}></input>
+                            </label>
+                            <br />
+                            <label className="required-field">
+                                Federal Allowances
+                        <input onChange={this.handleChangeInput('federalAllowances')}></input>
+                            </label>
+                            <br />
+                            <label className="required-field">
+                                State Allowances
+                        <input onChange={this.handleChangeInput('stateAllowances')}></input>
+                            </label>
+                            <br />
+                            <label className="required-field">
+                                Marital Status
+                        <input onChange={this.handleChangeInput('maritalStatus')}></input>
+                            </label>
+                            <br />
+                            <label className="required-field">
+                                Employer Pays Employees Portion of FICA
+                        <Switch onChange={this.handleChangeSwitchFica} />
+                            </label>
+                        </>
+                    }
                     <br />
-                    <label>
-                        Social Security
-                    <input onChange={this.handleChangeInput('socialSecurity')}></input>
-                    </label>
-                    <br />
-                    <label>
-                        Date of Birth
-                    <input onChange={this.handleChangeInput('dob')}></input>
-                    </label>
-                    <br />
-                    <label>
-                        Federal Allowances
-                    <input onChange={this.handleChangeInput('federalAllowances')}></input>
-                    </label>
-                    <br />
-                    <label>
-                        State Allowances
-                    <input onChange={this.handleChangeInput('stateAllowances')}></input>
-                    </label>
-                    <br />
-                    <label>
-                        Marital Status
-                    <input onChange={this.handleChangeInput('maritalStatus')}></input>
-                    </label>
-                    <br />
-                    <label>
-                        Employer Pays Employees Portion of FICA
-                    <input onChange={this.handleChangeInput('employerPaysEmployeesFica')}></input>
-                    </label>
-                    <br />
-                    <button onClick={this.handleClickCancel}>Cancel</button>
+                    <button onClick={this.handleClickSkip}>Skip</button>
                     <button onClick={this.handleClickNext}>Next</button>
                 </form>
                 <pre>{JSON.stringify(this.state, null, 2)}</pre>

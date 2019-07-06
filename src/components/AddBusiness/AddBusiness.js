@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import "./RegisterBusiness.css";
+import "./AddBusiness.css";
 
-class RegisterBusiness extends Component {
+class AddBusiness extends Component {
 
     state = {
-        businessName: '',
-        owner: '',
-        employerIdentificationNumber: '',
-        stateTaxId: '',
-        streetAddress: '',
-        city: '',
-        state: '',
-        zipCode: '',
-        mobilePhone: '',
-        alternatePhone: '',
-        serviceType: '',
+        businessName: null, // string, not null
+        serviceType: null, // sting, not null
+        employerIdentificationNumber: null, // string
+        stateTaxId: null, // string
+        streetAddress: null, // string
+        city: null, // string
+        state: null, // string
+        zipCode:null, // string
+        mobilePhone: null, // string 
+        alternatePhone: null, // string
+        email: null, // string not null
     }
 
     handleChangeInput = (propertyName) => (event) => {
@@ -25,10 +25,9 @@ class RegisterBusiness extends Component {
         })
     }
 
-    handleClickCancel = () => {
+    handleClickSkip = () => {
         this.setState ({
             businessName: '',
-            owner: '',
             employerIdentificationNumber: '',
             stateTaxId: '',
             streetAddress: '',
@@ -38,27 +37,45 @@ class RegisterBusiness extends Component {
             mobilePhone: '',
             alternatePhone: '',
             serviceType: '',
+            email: '',
         })
         this.props.history.push('/home');
     }
 
+    // clean code
     handleClickNext = () => {
-        this.props.history.push('/register/new/employee');
+        if (this.checkRequiredFields([this.state.businessName, this.state.serviceType, this.state.email])) {
+            this.props.dispatch({type: 'POST_REGISTER_BUSINESS', payload: {...this.state, userId: this.props.user.id}});
+            this.props.history.push('/register/new/employee');
+        }
+        else {
+            alert("Please complete all required fields!");
+        }
     }
 
+    // returns false if a field is null or an empty string
+    checkRequiredFields = (arrayOfFields) => {
+        let count = 0;
+        for(const field of arrayOfFields) {
+            if (field === null || field === '') {
+                count +=1;
+            }
+        }
+        if (count === 0){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     render() {
         return (
             <div>
                 <form className="register-business-form">
                     <h1>Register Your Business</h1>
-                    <label>
+                    <label  className="required-field">
                         Business Name
                     <input onChange={this.handleChangeInput('businessName')}></input>
-                    </label>
-                    <br />
-                    <label>
-                        Owner
-                    <input onChange={this.handleChangeInput('owner')}></input>
                     </label>
                     <br />
                     <label>
@@ -101,15 +118,21 @@ class RegisterBusiness extends Component {
                     <input onChange={this.handleChangeInput('alternatePhone')}></input>
                     </label>
                     <br />
-                    <label>
+                    <label className="required-field">
                         Service Type
                     <input onChange={this.handleChangeInput('serviceType')}></input>
                     </label>
                     <br />
-                    <button onClick={this.handleClickCancel}>Cancel</button>
+                    <label className="required-field">
+                        Email Address
+                    <input onChange={this.handleChangeInput('email')}></input>
+                    </label>
+                    <br />
+                    <button onClick={this.handleClickSkip}>Skip</button>
                     <button onClick={this.handleClickNext}>Next</button>
                 </form>
-                <pre>{JSON.stringify(this.state, null, 2)}</pre>
+                <pre>Local State{JSON.stringify(this.state, null, 2)}</pre>
+                <pre>redux State{JSON.stringify(this.props.state, null, 2)}</pre>
             </div>
         )
     }
@@ -117,6 +140,7 @@ class RegisterBusiness extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
+    state
 });
 
-export default connect(mapStateToProps)(RegisterBusiness);
+export default connect(mapStateToProps)(AddBusiness);

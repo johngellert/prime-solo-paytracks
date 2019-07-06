@@ -16,14 +16,14 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
-import RegisterBusiness from '../RegisterBusiness/RegisterBusiness';
-import RegisterAddEmployee from '../RegisterAddEmployee/RegisterAddEmployee';
+import AddBusiness from '../AddBusiness/AddBusiness';
+import AddEmployee from '../AddEmployee/AddEmployee';
 
 import './App.css';
 
 class App extends Component {
   componentDidMount() {
-    this.props.dispatch({ type: 'FETCH_USER' })
+    this.props.dispatch({ type: 'FETCH_USER' });
   }
 
   render() {
@@ -54,13 +54,13 @@ class App extends Component {
             <ProtectedRoute
               exact
               path="/register/business"
-              component={RegisterBusiness}
+              component={AddBusiness}
             />
 
             <ProtectedRoute
               exact
               path="/register/new/employee"
-              component={RegisterAddEmployee}
+              component={AddEmployee}
             />
 
 
