@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import './AddEmployee.css'
 
-class RegisterAddEmployee extends Component {
+class AddEmployee extends Component {
 
     state = {
         firstName: '', // employee table, not null
@@ -134,12 +134,25 @@ class RegisterAddEmployee extends Component {
                     <br />
                     <label className="required-field">
                         Assign Business
-                    <input onChange={this.handleChangeInput('assignedBusiness')}></input>
+                    <Select
+                        value={this.state.payPeriodFrequency}
+                        onChange={this.handleChangeInput('assignedBusiness')}
+                    >
+                        {this.props.business.length !== 0 &&
+                            this.props.business.map(eachBusiness => {
+                                return <MenuItem  
+                                key={eachBusiness.id}
+                                value={eachBusiness.id}
+                                >
+                                {eachBusiness.businessName}
+                                </MenuItem>
+                            })}
+                    </Select>
                     </label>
                     <br />
                     <label className="required-field">
                         Pay Period Frequency
-                        <Select 
+                        <Select
                             value={this.state.payPeriodFrequency}
                             onChange={this.handleChangeInput('payPeriodFrequency')}
                         >
@@ -148,7 +161,7 @@ class RegisterAddEmployee extends Component {
                             <MenuItem value={52}>52 - Paid Weekly</MenuItem>
                             <MenuItem value={26}>26 - Paid Every Two Weeks</MenuItem>
                             <MenuItem value={24}>24 - Paid Twice a Month</MenuItem>
-                            <MenuItem value={12}>12 - Paid Once a Month</MenuItem> 
+                            <MenuItem value={12}>12 - Paid Once a Month</MenuItem>
                         </Select>
                     </label>
                     <br />
@@ -184,7 +197,8 @@ class RegisterAddEmployee extends Component {
                     <button onClick={this.handleClickSkip}>Skip</button>
                     <button onClick={this.handleClickNext}>Next</button>
                 </form>
-                <pre>{JSON.stringify(this.state, null, 2)}</pre>
+                <pre>Local State{JSON.stringify(this.state, null, 2)}</pre>
+                <pre>Redux State{JSON.stringify(this.props, null, 2)}</pre>
             </div>
         )
     }
@@ -192,6 +206,7 @@ class RegisterAddEmployee extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
+    business: state.business.businessReducer,
 });
 
-export default connect(mapStateToProps)(RegisterAddEmployee);
+export default connect(mapStateToProps)(AddEmployee);
