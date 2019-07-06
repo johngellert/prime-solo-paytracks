@@ -40,7 +40,10 @@ class AddEmployee extends Component {
         if (this.state.isTaxable) {
             this.setState({
                 isTaxable: !this.state.isTaxable,
-                employerPaysEmployeesFica: false,
+                employerPaysEmployeesFica: false,  // when isTaxable is toggled off, set back to original state
+                federalAllowances: 0, // when isTaxable is toggled off, set back to original state
+                stateAllowances: 0,  // when isTaxable is toggled off, set back to original state
+                maritalStatus: 'Single',  // when isTaxable is toggled off, set back to original state
             });
         } else {
             this.setState({
@@ -171,7 +174,7 @@ class AddEmployee extends Component {
                     </label>
                     {this.state.isTaxable &&
                         <>
-                            <br />
+                        <h2>Employee Withholding Information</h2>
                             <label className="required-field">
                                 Federal Allowances
                         <input onChange={this.handleChangeInput('federalAllowances')}></input>
