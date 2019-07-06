@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Switch from '@material-ui/core/Switch';
+import Select from '@material-ui/core/Select';
 
 import { connect } from 'react-redux';
 
@@ -8,30 +9,23 @@ import './AddEmployee.css'
 class RegisterAddEmployee extends Component {
 
     state = {
-        firstName: '',
-        lastName: '',
-        streetAddress: '',
-        city: '',
-        state: '',
-        zipCode: '',
-        mobilePhone: '',
-        alternatePhone: '',
-        emailAddress: '',
-        assignedBusiness: '',
-        taxableEmployee: false,
-        socialSecurity: '',
-        dob: '',
-        federalAllowances: 0,
-        stateAllowances: 0,
-        maritalStatus: 'Single',
-        employerPaysEmployeesFica: false,
+        firstName: '', // employee table, not null
+        lastName: '', // employee table, not null
+        streetAddress: null, // address table
+        city: null, // address table
+        state: null, // address table
+        zipCode: null, // address table
+        mobilePhone: '', // contact table, not null
+        alternatePhone: null, // contact table
+        emailAddress: '', // contact table, not null
+        assignedBusiness: '', // select current business id from redux state, insert into the employee_business table
+        payPeriodFrequency: '', // employee_business table, not null
+        isTaxable: false, // employee_business table, not null
+        federalAllowances: 0, // withholding table, not null
+        stateAllowances: 0, // withholding table, not null
+        maritalStatus: 'Single', // withholding table, not null (select with options)
+        employerPaysEmployeesFica: false, // withholding table, not null
     }
-
-    // componentDidUpdate() {
-    //     this.setState({
-    //         employerPaysEmployeesFica: this.state.taxableEmployee && this.state.employerPaysEmployeesFica || false,
-    //     });
-    // }
 
     handleChangeInput = (propertyName) => (event) => {
         this.setState({
@@ -39,56 +33,45 @@ class RegisterAddEmployee extends Component {
         });
     }
 
-    // handleChangeSwitch = (propertyName) => () => {
-    //     this.setState({
-    //         [propertyName]: !this.state[propertyName],
-    //         employerPaysEmployeesFica: this.state.taxableEmployee ? this.state.employerPaysEmployeesFica : false,
-    //     });
-    // }
-
     handleChangeSwitchTaxable = () => {
-        
         // if condition is true, set the taxableEmployee to false and the employerPaysEmployeeFica to false
         // else, only set the taxableEmployee to the opposite value of its current value
         if (this.state.taxableEmployee) {
             this.setState({
-                taxableEmployee: !this.state.taxableEmployee,
+                isTaxable: !this.state.taxableEmployee,
                 employerPaysEmployeesFica: false,
             });
         } else {
             this.setState({
-                taxableEmployee: !this.state.taxableEmployee,
+                isTaxable: !this.state.taxableEmployee,
             });
         }
-
     }
 
     handleChangeSwitchFica = () => {
         this.setState({
             employerPaysEmployeesFica: !this.state.employerPaysEmployeesFica,
-
         });
     }
 
     handleClickSkip = () => {
         this.setState({
-            firstName: '',
-            lastName: '',
-            streetAddress: '',
-            city: '',
-            state: '',
-            zipCode: '',
-            mobilePhone: '',
-            alternatePhone: '',
-            emailAddress: '',
-            assignedBusiness: '',
-            taxableEmployee: false,
-            socialSecurity: '',
-            dob: '',
-            federalAllowances: 0,
-            stateAllowances: 0,
-            maritalStatus: 'Single',
-            employerPaysEmployeesFica: false,
+            firstName: '', // employee table, not null
+            lastName: '', // employee table, not null
+            streetAddress: null, // address table
+            city: null, // address table
+            state: null, // address table
+            zipCode: null, // address table
+            mobilePhone: '', // contact table, not null
+            alternatePhone: null, // contact table
+            emailAddress: '', // contact table, not null
+            assignedBusiness: '', // select current business id from redux state, insert into the employee_business table
+            payPeriodFrequency: '', // employee_business table, not null
+            isTaxable: false, // employee_business table, not null
+            federalAllowances: 0, // withholding table, not null
+            stateAllowances: 0, // withholding table, not null
+            maritalStatus: 'Single', // withholding table, not null (select with options)
+            employerPaysEmployeesFica: false, // withholding table, not null
         })
         this.props.history.push('/home');
     }
@@ -132,7 +115,7 @@ class RegisterAddEmployee extends Component {
                     <input onChange={this.handleChangeInput('zipCode')}></input>
                     </label>
                     <br />
-                    <label>
+                    <label className="required-field">
                         Mobile Phone
                     <input onChange={this.handleChangeInput('mobilePhone')}></input>
                     </label>
@@ -153,21 +136,16 @@ class RegisterAddEmployee extends Component {
                     </label>
                     <br />
                     <label className="required-field">
+                        Pay Period Frequency
+                        <Select onChange={this.handleChangeInput('payPeriodFrequency')}/>
+                    </label>
+                    <br />
+                    <label className="required-field">
                         Is Taxable
                     <Switch onChange={this.handleChangeSwitchTaxable} />
                     </label>
                     {this.state.taxableEmployee &&
                         <>
-                            <br />
-                            <label className="required-field">
-                                Social Security
-                        <input onChange={this.handleChangeInput('socialSecurity')}></input>
-                            </label>
-                            <br />
-                            <label className="required-field">
-                                Date of Birth
-                        <input onChange={this.handleChangeInput('dob')}></input>
-                            </label>
                             <br />
                             <label className="required-field">
                                 Federal Allowances
