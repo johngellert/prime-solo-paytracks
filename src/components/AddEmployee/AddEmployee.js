@@ -1,11 +1,23 @@
+
+// React
 import React, { Component } from 'react';
+
+// Material-UI
 import Switch from '@material-ui/core/Switch';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
+// Redux
 import { connect } from 'react-redux';
 
+// Stylesheet
 import './AddEmployee.css'
+
+// Function that checks for empty strings or null values
+// Accepts an array of values
+// Returns true if all fields are not empty
+// Returns false if any fields are empty
+import checkRequiredFields from '../CheckRequiredFields/CheckRequiredFields';
 
 class AddEmployee extends Component {
 
@@ -22,9 +34,9 @@ class AddEmployee extends Component {
         assignedBusiness: '', // select current business id from redux state, insert into the employee_business table
         payPeriodFrequency: '', // employee_business table, not null
         isTaxable: false, // employee_business table, not null
-        federalAllowances: 0, // withholding table, not null
-        stateAllowances: 0, // withholding table, not null
-        maritalStatus: 'Single', // withholding table, not null (select with options)
+        federalAllowances: '', // withholding table, not null
+        stateAllowances: '', // withholding table, not null
+        maritalStatus: '', // withholding table, not null (select with options)
         employerPaysEmployeesFica: false, // withholding table, not null
     }
 
@@ -41,9 +53,9 @@ class AddEmployee extends Component {
             this.setState({
                 isTaxable: !this.state.isTaxable,
                 employerPaysEmployeesFica: false,  // when isTaxable is toggled off, set back to original state
-                federalAllowances: 0, // when isTaxable is toggled off, set back to original state
-                stateAllowances: 0,  // when isTaxable is toggled off, set back to original state
-                maritalStatus: 'Single',  // when isTaxable is toggled off, set back to original state
+                federalAllowances: '', // when isTaxable is toggled off, set back to original state
+                stateAllowances: '',  // when isTaxable is toggled off, set back to original state
+                maritalStatus: '',  // when isTaxable is toggled off, set back to original state
             });
         } else {
             this.setState({
@@ -70,19 +82,53 @@ class AddEmployee extends Component {
             mobilePhone: '', // contact table, not null
             alternatePhone: null, // contact table
             emailAddress: '', // contact table, not null
-            assignedBusiness: '', // select current business id from redux state, insert into the employee_business table
+            assignedBusiness: '', // select current business id from redux state, insert into the employee_business table, not null
             payPeriodFrequency: '', // employee_business table, not null
             isTaxable: false, // employee_business table, not null
-            federalAllowances: 0, // withholding table, not null
-            stateAllowances: 0, // withholding table, not null
-            maritalStatus: 'Single', // withholding table, not null (select with options)
+            federalAllowances: '', // withholding table, not null
+            stateAllowances: '', // withholding table, not null
+            maritalStatus: '', // withholding table, not null (select with options)
             employerPaysEmployeesFica: false, // withholding table, not null
         })
         this.props.history.push('/home');
     }
 
     handleClickNext = () => {
-        this.props.history.push('/home');
+        if(this.state.isTaxable) {
+            if (checkRequiredFields([
+                this.state.firstName, 
+                this.state.lastName, 
+                this.state.mobilePhone,
+                this.state.emailAddress,
+                this.state.assignedBusiness,
+                this.state.payPeriodFrequency,
+                this.state.federalAllowances,
+                this.state.stateAllowances,
+                this.state.maritalStatus,
+            ])) {
+                // will send all fields to saga
+                //this.props.dispatch({type: 'POST_REGISTER_BUSINESS', payload: {...this.state, userId: this.props.user.id}});
+                //this.props.history.push('/register/new/employee');
+            } else {
+                alert('Please complete all required fields OR select "Skip" to cancel adding an employee!');
+            }
+        } else {
+            // do not check withholding for required fields
+            if (checkRequiredFields([
+                this.state.firstName, 
+                this.state.lastName, 
+                this.state.mobilePhone,
+                this.state.emailAddress,
+                this.state.assignedBusiness,
+                this.state.payPeriodFrequency,
+            ])) {
+                // will not send withholding information to saga
+                //this.props.dispatch({type: 'POST_REGISTER_BUSINESS', payload: {...this.state, userId: this.props.user.id}});
+                //this.props.history.push('/register/new/employee');
+            } else {
+                alert('Please complete all required fields OR select "Skip" to cancel adding an employee!');
+            }
+        }
     }
 
     render() {
@@ -138,7 +184,7 @@ class AddEmployee extends Component {
                     <label className="required-field">
                         Assign Business
                     <Select
-                        value={this.state.payPeriodFrequency}
+                        value={this.state.assignedBusiness}
                         onChange={this.handleChangeInput('assignedBusiness')}
                     >
                         {this.props.business.length !== 0 &&
@@ -159,7 +205,6 @@ class AddEmployee extends Component {
                             value={this.state.payPeriodFrequency}
                             onChange={this.handleChangeInput('payPeriodFrequency')}
                         >
-                            <MenuItem value=""><em>None</em></MenuItem>
                             <MenuItem value={360}>360 - Paid Daily</MenuItem>
                             <MenuItem value={52}>52 - Paid Weekly</MenuItem>
                             <MenuItem value={26}>26 - Paid Every Two Weeks</MenuItem>
@@ -177,17 +222,23 @@ class AddEmployee extends Component {
                         <h2>Employee Withholding Information</h2>
                             <label className="required-field">
                                 Federal Allowances
-                        <input onChange={this.handleChangeInput('federalAllowances')}></input>
+                        <input type="number" onChange={this.handleChangeInput('federalAllowances')}></input>
                             </label>
                             <br />
                             <label className="required-field">
                                 State Allowances
-                        <input onChange={this.handleChangeInput('stateAllowances')}></input>
+                        <input type="number" onChange={this.handleChangeInput('stateAllowances')}></input>
                             </label>
                             <br />
                             <label className="required-field">
                                 Marital Status
-                        <input onChange={this.handleChangeInput('maritalStatus')}></input>
+                                <Select
+                                    value={this.state.maritalStatus}
+                                    onChange={this.handleChangeInput('maritalStatus')}
+                                >   
+                                    <MenuItem value='Single'>Single</MenuItem>
+                                    <MenuItem value='Married'>Married</MenuItem> 
+                                </Select>
                             </label>
                             <br />
                             <label className="required-field">
