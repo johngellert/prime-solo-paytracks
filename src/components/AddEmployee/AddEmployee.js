@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Switch from '@material-ui/core/Switch';
 import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import { connect } from 'react-redux';
 
@@ -34,16 +35,16 @@ class RegisterAddEmployee extends Component {
     }
 
     handleChangeSwitchTaxable = () => {
-        // if condition is true, set the taxableEmployee to false and the employerPaysEmployeeFica to false
-        // else, only set the taxableEmployee to the opposite value of its current value
-        if (this.state.taxableEmployee) {
+        // if condition is true, set isTaxable to false and the employerPaysEmployeeFica to false
+        // else, only set the isTaxable to the opposite value of its current value
+        if (this.state.isTaxable) {
             this.setState({
-                isTaxable: !this.state.taxableEmployee,
+                isTaxable: !this.state.isTaxable,
                 employerPaysEmployeesFica: false,
             });
         } else {
             this.setState({
-                isTaxable: !this.state.taxableEmployee,
+                isTaxable: !this.state.isTaxable,
             });
         }
     }
@@ -54,6 +55,7 @@ class RegisterAddEmployee extends Component {
         });
     }
 
+    // skip adding employee and go to home
     handleClickSkip = () => {
         this.setState({
             firstName: '', // employee table, not null
@@ -137,14 +139,24 @@ class RegisterAddEmployee extends Component {
                     <br />
                     <label className="required-field">
                         Pay Period Frequency
-                        <Select onChange={this.handleChangeInput('payPeriodFrequency')}/>
+                        <Select 
+                            value={this.state.payPeriodFrequency}
+                            onChange={this.handleChangeInput('payPeriodFrequency')}
+                        >
+                            <MenuItem value=""><em>None</em></MenuItem>
+                            <MenuItem value={360}>360 - Paid Daily</MenuItem>
+                            <MenuItem value={52}>52 - Paid Weekly</MenuItem>
+                            <MenuItem value={26}>26 - Paid Every Two Weeks</MenuItem>
+                            <MenuItem value={24}>24 - Paid Twice a Month</MenuItem>
+                            <MenuItem value={12}>12 - Paid Once a Month</MenuItem> 
+                        </Select>
                     </label>
                     <br />
                     <label className="required-field">
                         Is Taxable
                     <Switch onChange={this.handleChangeSwitchTaxable} />
                     </label>
-                    {this.state.taxableEmployee &&
+                    {this.state.isTaxable &&
                         <>
                             <br />
                             <label className="required-field">
