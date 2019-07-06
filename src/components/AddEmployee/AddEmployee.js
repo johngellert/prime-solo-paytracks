@@ -27,12 +27,6 @@ class RegisterAddEmployee extends Component {
         employerPaysEmployeesFica: false, // withholding table, not null
     }
 
-    // componentDidUpdate() {
-    //     this.setState({
-    //         employerPaysEmployeesFica: this.state.taxableEmployee && this.state.employerPaysEmployeesFica || false,
-    //     });
-    // }
-
     handleChangeInput = (propertyName) => (event) => {
         this.setState({
             [propertyName]: event.target.value,
@@ -40,7 +34,6 @@ class RegisterAddEmployee extends Component {
     }
 
     handleChangeSwitchTaxable = () => {
-
         // if condition is true, set the taxableEmployee to false and the employerPaysEmployeeFica to false
         // else, only set the taxableEmployee to the opposite value of its current value
         if (this.state.taxableEmployee) {
@@ -53,13 +46,11 @@ class RegisterAddEmployee extends Component {
                 isTaxable: !this.state.taxableEmployee,
             });
         }
-
     }
 
     handleChangeSwitchFica = () => {
         this.setState({
             employerPaysEmployeesFica: !this.state.employerPaysEmployeesFica,
-
         });
     }
 
