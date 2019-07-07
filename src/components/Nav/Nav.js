@@ -22,7 +22,17 @@ const Nav = (props) => (
           <Link className="nav-link" to="/info">
             Info Page
           </Link>
+          <Link className="nav-link" to="/register/business">
+            Add Business
+          </Link>
+          {/* only show Add Employee link if businesses have been added */}
+          {props.business.length !==0 && (
+          <Link className="nav-link" to="/register/new/employee">
+            Add Employee
+          </Link>)}
+
           <LogOutButton className="nav-link"/>
+
         </>
       )}
       {/* Always show this link since the about page is not protected */}
@@ -40,6 +50,7 @@ const Nav = (props) => (
 // const mapStateToProps = ({ user }) => ({ user });
 const mapStateToProps = state => ({
   user: state.user,
+  business: state.business.businessReducer,
 });
 
 export default connect(mapStateToProps)(Nav);

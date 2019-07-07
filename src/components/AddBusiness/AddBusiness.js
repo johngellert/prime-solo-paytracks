@@ -3,6 +3,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import "./AddBusiness.css";
 
+// Function that checks for empty strings or null values
+// Accepts an array of values
+// Returns true if all fields are not empty
+// Returns false if any fields are empty
+import checkRequiredFields from '../CheckRequiredFields/CheckRequiredFields';
+
 class AddBusiness extends Component {
 
     state = {
@@ -44,30 +50,15 @@ class AddBusiness extends Component {
 
     // clean code
     handleClickNext = () => {
-        if (this.checkRequiredFields([this.state.businessName, this.state.serviceType, this.state.email])) {
+        if (checkRequiredFields([this.state.businessName, this.state.serviceType, this.state.email])) {
             this.props.dispatch({type: 'POST_REGISTER_BUSINESS', payload: {...this.state, userId: this.props.user.id}});
             this.props.history.push('/register/new/employee');
         }
         else {
-            alert("Please complete all required fields!");
+            alert('Please complete all required fields OR select "Skip" to cancel adding a business!');
         }
     }
 
-    // returns false if a field is null or an empty string
-    checkRequiredFields = (arrayOfFields) => {
-        let count = 0;
-        for(const field of arrayOfFields) {
-            if (field === null || field === '') {
-                count +=1;
-            }
-        }
-        if (count === 0){
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
     render() {
         return (
             <div>
