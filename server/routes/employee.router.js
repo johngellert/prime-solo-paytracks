@@ -49,6 +49,13 @@ router.post('/', async (req, res) => {
             "employee_id"
         ) VALUES ($1, $2, $3, $4, $5);`;
 
+        const addEmployeeContactInfo = `INSERT INTO "contact_info" (
+            "mobilePhone", 
+            "alternatePhone", 
+            "emailAddress", 
+            "employee_id"
+            ) VALUES ($1, $2, $3, $4);`;
+
         await client.query('BEGIN')
         
 
@@ -66,7 +73,12 @@ router.post('/', async (req, res) => {
             employee_id // the employee ID returning
         ]);
 
-        
+        await client.query(addEmployeeContactInfo, [
+            mobilePhone,
+            alternatePhone,
+            emailAddress,
+            employee_id // the employee ID returning
+        ]);
 
         await client.query('COMMIT')
         res.sendStatus(201);
