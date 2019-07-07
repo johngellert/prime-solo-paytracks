@@ -215,7 +215,7 @@ class AddEmployee extends Component {
                     <br />
                     <label className="required-field">
                         Is Taxable
-                    <Switch onChange={this.handleChangeSwitchTaxable} />
+                    <Switch onChange={this.handleChangeSwitchTaxable} color="secondary" />
                     </label>
                     {this.state.isTaxable &&
                         <>
