@@ -9,6 +9,16 @@ const businessReducer = (state = [], action) => {
   }
 };
 
+const singleBusiness = (state = {}, action) => {
+  switch (action.type) {
+    case 'SET_SINGLE_BUSINESS':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
-    businessReducer,
+  businessReducer,
+  singleBusiness,
 });

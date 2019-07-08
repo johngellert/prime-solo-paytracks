@@ -16,6 +16,9 @@ function* fetchBusinesses(action) {
     try {
         const businessResponse = yield axios.get(`api/business/?id=${action.payload}`);
         yield put({ type: 'SET_BUSINESS', payload: businessResponse.data });
+        if (businessResponse.data.length !== 0) {
+            yield put({type: 'SET_SINGLE_BUSINESS', payload: businessResponse.data[0]});
+        }
     } catch (error) {
         console.log("Error with fetching businesses:", error)
     }

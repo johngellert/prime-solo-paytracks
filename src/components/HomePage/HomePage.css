@@ -1,4 +1,13 @@
-#welcome-message {
-    background-color: blue;
-    float: left;
+#welcome-container {
+    display: flex;
+    flex-direction: row wrap;
+    justify-content: flex-end;
+}
+
+#welcome {
+    white-space: pre;
+}
+
+#your-id {
+    white-space: pre;
 }

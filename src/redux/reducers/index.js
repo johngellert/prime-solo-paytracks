@@ -5,7 +5,7 @@ import user from './userReducer';
 import business from './businessReducer';
 
 // rootReducer is the primary reducer for our entire project
-// It bundles up all of the other reducers so our project can use them.
+// It bundles up all of the other reducers so or project can use them.
 // This is imported in index.js as rootSaga
 
 // Lets make a bigger object for our store, with the objects from our reducers.
