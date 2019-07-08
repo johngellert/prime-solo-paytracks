@@ -1,0 +1,22 @@
+
+#employees-page{
+    width: 1000px;
+    margin: 0px auto;
+}
+.each-employee-title {
+    white-space: pre;
+}
+
+.each-employee-details {
+    white-space: pre;
+    display: flex;
+    flex-direction: column;
+}
+
+.each-employee-button-container{
+    width: 100px
+}
+
+#employees-container {
+    width: 800px;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import './EmployeesPage.css';
 
 // Material-UI
 import Card from '@material-ui/core/Card';
@@ -11,7 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Edit from '@material-ui/icons/Edit';
 
 class EmployeesPage extends Component {
 
@@ -54,47 +56,61 @@ class EmployeesPage extends Component {
           {this.props.employees.length !== 0 &&
             this.props.employees.map(eachEmployee => {
               if (eachEmployee.business_id === this.props.singleBusiness.id) {
-                return <Card
+                return <ExpansionPanel
                   className="each-employee"
                   key={eachEmployee.employee_id}
                   value={eachEmployee.employee_id}
                 >
-                  <ExpansionPanel>
-                    <ExpansionPanelSummary>
-                      <Typography>
-                        {eachEmployee.firstName}
-                      </Typography>
-                      <Typography>
-                        {eachEmployee.lastName}
-                      </Typography>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                      <div className="each-employee-title">
+                        <div>
+                          {eachEmployee.firstName} {eachEmployee.lastName}
+                        </div>
+                      </div>
                     </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                    <Typography>
-                        {eachEmployee.lastName}
-                      </Typography>
-                    </ExpansionPanelDetails>
+                        <ExpansionPanelDetails className="each-employee-details">
+                          <div className="each-employee-button-container">
+                            <Edit className="employee-edit-icon"/><br />
+                            <div>
+                              <Button variant="contained" color="secondary">Edit</Button>
+                            </div>
+                            <br />
+                            <div>
+                              <Button variant="outlined" color="primary">Delete</Button>
+                            </div>
+                            <br />
+                            
+                          </div>
+                          <div>
+                            Employee ID: {eachEmployee.employee_id}
+                            <br />
+                            Pay Period Frequency: {eachEmployee.payPeriodFrequency}
+                            <br />
+                            Taxable Employee: {eachEmployee.isTaxable && 'Yes' || 'No'}
+                            <br />
+                          </div>
+                        </ExpansionPanelDetails>
                   </ExpansionPanel>
-                </Card>
-              }
-            })
-          }
+                    }
+                  })
+                }
         </div>
-        <pre>
-          {JSON.stringify(this.props.state, null, 2)}
-        </pre>
+                  <pre>
+                    {JSON.stringify(this.props.state, null, 2)}
+                  </pre>
       </div>
     )
-  }
-}
-// Instead of taking everything from state, we just want the user info.
-// if you wanted you could write this code like this:
+          }
+          }
+          // Instead of taking everything from state, we just want the user info.
+          // if you wanted you could write this code like this:
 // const mapStateToProps = ({user}) => ({user});
 const mapStateToProps = state => ({
-  user: state.user,
-  singleBusiness: state.business.singleBusiness,
-  employees: state.employees.employeesReducer,
-  state,
-});
-
+            user: state.user,
+          singleBusiness: state.business.singleBusiness,
+          employees: state.employees.employeesReducer,
+          state,
+        });
+        
 // this allows us to use <App /> in index.js
-export default connect(mapStateToProps)(EmployeesPage);
+          export default connect(mapStateToProps)(EmployeesPage);
