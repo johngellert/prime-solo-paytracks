@@ -2,12 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 
-import {
-  HashRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
