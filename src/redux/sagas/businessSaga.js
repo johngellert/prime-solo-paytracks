@@ -31,9 +31,8 @@ function* fetchSingleBusiness(action) {
     try {
         yield put({type: 'SET_SINGLE_BUSINESS', payload: action.payload});
     } catch (error) {
-        
+        console.log("Error with setting single business:", error)
     }
-
 }
 
 

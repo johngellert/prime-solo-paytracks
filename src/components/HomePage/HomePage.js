@@ -73,7 +73,7 @@ class HomePage extends Component {
         <br />
         <br />
         <div id="employees-container">
-          {this.props.employees.length !== 0 &&
+          {/* {this.props.employees.length !== 0 &&
             this.props.employees.map(eachEmployee => {
               return <div
                 white-space="pre"
@@ -82,7 +82,26 @@ class HomePage extends Component {
               >
                 {eachEmployee.firstName}<></>{eachEmployee.lastName}
               </div>
-            })}
+            })} */}
+
+          {this.props.employees.length !== 0 &&
+            this.props.employees.map(eachEmployee => {
+              return <Card
+                className="each-employee"
+                key={eachEmployee.employee_id}
+                value={eachEmployee.employee_id}
+              >
+                <CardContent>
+                  <Typography>
+                    {eachEmployee.firstName}
+                  </Typography>
+                  <Typography>
+                    {eachEmployee.lastName}
+                  </Typography>
+                </CardContent>
+              </Card>
+            })
+          }
         </div>
         <pre>
           {JSON.stringify(this.props.state, null, 2)}
