@@ -28,3 +28,11 @@
     display: flex;
     flex-direction: column;
 }
+
+.cash-payment {
+    opacity: 0.5;
+}
+
+.check-payment {
+
+}

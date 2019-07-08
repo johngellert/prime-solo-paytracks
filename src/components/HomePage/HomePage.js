@@ -22,8 +22,17 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import CurrencyInput from 'react-currency-input';
+import DatePickers from '../DatePickers/DatePickers';
 
 class HomePage extends Component {
+
+  state = {
+    grossWages: 0,
+    netPay: 0,
+    isCash: false,
+    checkNumber: null,
+    // 7.65% (6.2% for social security tax and 1.45% for Medicare tax) 
+}
 
   componentDidMount() {
     // fetch businesses for the new user
@@ -34,6 +43,12 @@ class HomePage extends Component {
 
     // Payload is a single business object
     this.props.dispatch({ type: 'FETCH_SINGLE_BUSINESS', payload: event.target.value });
+  }
+
+  handleChangeSwitchCash = () => {
+    this.setState({
+      isCash: !this.state.isCash,
+    })
   }
 
   render() {
@@ -127,16 +142,6 @@ class HomePage extends Component {
                       </div>
                     </ExpansionPanelSummary>
                         <ExpansionPanelDetails className="each-employee-payment">
-                          <div className="each-employee-button-container">
-                            <div>
-                              <Button variant="contained" color="secondary">Pay</Button>
-                            </div>
-                            <br />
-                            <div>
-                              <Button variant="outlined" color="primary">Cancel</Button>
-                            </div>
-                            <br />  
-                          </div>
                           <div className="each-payment-input">
                             <label>
                               Gross Wage
@@ -148,11 +153,46 @@ class HomePage extends Component {
                                   prefix="$"
                                   allowNegative={false}
                                   allowEmpty={false}
-                                  value={0}
-                                  // value={this.state.grossWages}
-                                  // onChangeEvent={this.handleChangeGrossWages} 
+                                  // value={0}
+                                  value={this.state.grossWages}
+                                  onChangeEvent={this.handleChangeGrossWages} 
                               />
                             </label>
+                            <br />
+                            <label>
+                              Net Pay: {this.state.netPay > 0 ?
+                              '$' + this.state.netPay.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') :
+                              '$0.00'} <button onClick={this.handleClickCalculateNetPay}>Calculate Net Pay</button>
+                            </label>
+                            <br />
+                            <label>
+                              {this.state.isCash && 'Cash' || 'Check'}
+                              <Switch onChange={this.handleChangeSwitchCash} />
+                            </label>
+                            <br />
+                            <label>
+                                <input 
+                                  disabled={this.state.isCash && true || false} 
+                                  className={this.state.isCash && 'cash-payment' || 'check-payment'}
+                                  placeholder="Check #"
+                                >
+                                </input>
+                            </label>
+                            <br />
+                            <label>
+                              <DatePickers />
+                            </label>
+                              <div className="each-employee-button-container">
+                                <br />
+                                <div>
+                                  <Button variant="contained" color="secondary">Pay</Button>
+                                </div>
+                                <br />
+                                <div>
+                                  <Button variant="outlined" color="primary">Cancel</Button>
+                                </div>
+                                <br />  
+                              </div>
                           </div>
                         </ExpansionPanelDetails>
                   </ExpansionPanel>
