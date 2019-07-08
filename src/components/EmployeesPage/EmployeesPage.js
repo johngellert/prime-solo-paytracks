@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import './HomePage.css';
 
 
-class HomePage extends Component {
+class EmployeesPage extends Component {
 
 
   render() {
     return (
-    <div id="welcome-message">
-      <h1 id="welcome">
-        Welcome, {this.props.user.username}!
-      </h1>
-      <p>Your ID is: {this.props.user.id}</p>
-      <LogOutButton className="log-in" />
+    <div id="employees-page">
+        <h1>Employees Page</h1>
+      
+
     </div>
     )
   }
@@ -27,4 +23,4 @@ const mapStateToProps = state => ({
   });
   
   // this allows us to use <App /> in index.js
-  export default connect(mapStateToProps)(HomePage);
+  export default connect(mapStateToProps)(EmployeesPage);
