@@ -6,7 +6,17 @@ const router = express.Router();
  * GET route template
  */
 router.get('/', (req, res) => {
+    const getEmployeesQuery = `SELECT * FROM "employee" 
+    JOIN "employee_business" ON "employee"."id"="employee_business"."employee_id"
+    JOIN "business" ON "business"."id"="employee_business"."business_id"
+    WHERE "user_id"=$1;`;
 
+    pool.query(getEmployeesQuery, [req.query.id]).then((result) => {
+        res.send(result.rows);
+    }).catch(error => {
+        res.sendStatus(500); // Internal Server Error
+        console.log(`Error with SELECT employee query:`, error);
+    });
 });
 
 /**

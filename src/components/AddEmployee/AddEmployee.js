@@ -108,7 +108,7 @@ class AddEmployee extends Component {
             ])) {
                 // will send all fields to saga
                 this.props.dispatch({type: 'POST_REGISTER_EMPLOYEE', payload: {...this.state, userId: this.props.user.id}});
-                //this.props.history.push('/home');
+                this.props.history.push('/home');
             } else {
                 alert('Please complete all required fields OR select "Skip" to cancel adding an employee!');
             }
@@ -124,7 +124,7 @@ class AddEmployee extends Component {
             ])) {
                 // will not send withholding information to saga
                 this.props.dispatch({type: 'POST_REGISTER_EMPLOYEE', payload: {...this.state, userId: this.props.user.id}});
-                //this.props.history.push('/home');
+                this.props.history.push('/home');
             } else {
                 alert('Please complete all required fields OR select "Skip" to cancel adding an employee!');
             }

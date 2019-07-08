@@ -12,19 +12,35 @@ function* addBusiness(action) {
     }
 }
 
+// action.payload is user id
 function* fetchBusinesses(action) {
     try {
         const businessResponse = yield axios.get(`api/business/?id=${action.payload}`);
         yield put({ type: 'SET_BUSINESS', payload: businessResponse.data });
+        if (businessResponse.data.length !== 0) {
+            yield put({type: 'SET_SINGLE_BUSINESS', payload: businessResponse.data[0]});
+        }
+        yield put({type:'FETCH_EMPLOYEES', payload: action.payload }); // action.payload is the user id
     } catch (error) {
         console.log("Error with fetching businesses:", error)
     }
 
 }
 
+function* fetchSingleBusiness(action) {
+    try {
+        yield put({type: 'SET_SINGLE_BUSINESS', payload: action.payload});
+    } catch (error) {
+        console.log("Error with setting single business:", error)
+    }
+}
+
+
+
 function* businessSaga() {
     yield takeLatest('POST_REGISTER_BUSINESS', addBusiness);
     yield takeLatest('FETCH_BUSINESSES', fetchBusinesses);
+    yield takeLatest('FETCH_SINGLE_BUSINESS', fetchSingleBusiness);
 }
 
 export default businessSaga;

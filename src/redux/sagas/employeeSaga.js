@@ -5,26 +5,30 @@ function* addEmployee(action) {
     try {
         console.log('add employee saga');
         console.log(action.payload);
-        const employeeResponse = yield axios.post('api/employee', action.payload); // returning employee id
+        yield axios.post('api/employee', action.payload);
         // yield put({type: 'FETCH_BUSINESSES', payload: action.payload.userId});
     } catch (error) {
         console.log("Error with adding employee:", error)
     }
 }
 
-// function* fetchBusinesses(action) {
-//     try {
-//         const businessResponse = yield axios.get(`api/business/?id=${action.payload}`);
-//         yield put({ type: 'SET_BUSINESS', payload: businessResponse.data });
-//     } catch (error) {
-//         console.log("Error with fetching businesses:", error)
-//     }
+// action.payload is the user ID
+function* fetchEmployees(action) {
+    try {
+        console.log('fetch employee saga');
+        console.log(action.payload);
+        const employeesResponse = yield axios.get(`api/employee?id=${action.payload}`); // payload is the user's ID
+        console.log(employeesResponse.data);
+        yield put ({type: `SET_EMPLOYEES`, payload: employeesResponse.data});
+    } catch (error) {
+        console.log("Error with fetching employees:", error)
+    }
+}
 
-// }
 
 function* employeeSaga() {
     yield takeLatest('POST_REGISTER_EMPLOYEE', addEmployee);
-//     yield takeLatest('FETCH_BUSINESSES', fetchBusinesses);
+    yield takeLatest('FETCH_EMPLOYEES', fetchEmployees);
 }
 
 export default employeeSaga;
