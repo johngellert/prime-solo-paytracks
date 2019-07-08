@@ -148,8 +148,10 @@ class HomePage extends Component {
                                   prefix="$"
                                   allowNegative={false}
                                   allowEmpty={false}
-                                  value={this.state.grossWages}
-                                  onChangeEvent={this.handleChangeGrossWages} />
+                                  value={0}
+                                  // value={this.state.grossWages}
+                                  // onChangeEvent={this.handleChangeGrossWages} 
+                              />
                             </label>
                           </div>
                         </ExpansionPanelDetails>
