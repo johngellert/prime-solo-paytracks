@@ -86,20 +86,22 @@ class HomePage extends Component {
 
           {this.props.employees.length !== 0 &&
             this.props.employees.map(eachEmployee => {
-              return <Card
-                className="each-employee"
-                key={eachEmployee.employee_id}
-                value={eachEmployee.employee_id}
-              >
-                <CardContent>
-                  <Typography>
-                    {eachEmployee.firstName}
-                  </Typography>
-                  <Typography>
-                    {eachEmployee.lastName}
-                  </Typography>
-                </CardContent>
-              </Card>
+              if (eachEmployee.business_id === this.props.singleBusiness.id) {
+                return <Card
+                  className="each-employee"
+                  key={eachEmployee.employee_id}
+                  value={eachEmployee.employee_id}
+                  >
+                  <CardContent>
+                    <Typography>
+                      {eachEmployee.firstName}
+                    </Typography>
+                    <Typography>
+                      {eachEmployee.lastName}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              }
             })
           }
         </div>
