@@ -14,7 +14,6 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Edit from '@material-ui/icons/Edit';
-import { withStyles } from '@material-ui/core/styles'
 
 class EmployeesPage extends Component {
 

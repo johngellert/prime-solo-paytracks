@@ -1,4 +1,9 @@
-#welcome-container {
+#home-page {
+    width: 1000px;
+    margin: 0px auto;
+}
+
+/* #welcome-container {
     display: flex;
     flex-direction: row wrap;
     justify-content: flex-end;
@@ -16,4 +21,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+} */
+
+.each-employee-payment {
+    white-space: pre;
+    display: flex;
+    flex-direction: column;
 }

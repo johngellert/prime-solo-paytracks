@@ -16,6 +16,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import CurrencyInput from 'react-currency-input';
+
 class HomePage extends Component {
 
   componentDidMount() {
@@ -31,7 +38,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <>
+      <div id="home-page">
         <div id="welcome-container">
           <div id="welcome">
             <strong>Welcome, {this.props.user.username}! </strong>
@@ -84,7 +91,7 @@ class HomePage extends Component {
               </div>
             })} */}
           <h2>Your Employees</h2>
-          {this.props.employees.length !== 0 &&
+          {/* {this.props.employees.length !== 0 &&
             this.props.employees.map(eachEmployee => {
               if (eachEmployee.business_id === this.props.singleBusiness.id) {
                 return <Card
@@ -103,12 +110,59 @@ class HomePage extends Component {
                 </Card>
               }
             })
-          }
+          } */}
+          {this.props.employees.length !== 0 &&
+            this.props.employees.map(eachEmployee => {
+              if (eachEmployee.business_id === this.props.singleBusiness.id) {
+                return <ExpansionPanel
+                  className="each-employee"
+                  key={eachEmployee.employee_id}
+                  value={eachEmployee.employee_id}
+                >
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                      <div className="each-employee-title">
+                        <div>
+                          {eachEmployee.firstName} {eachEmployee.lastName}
+                        </div>
+                      </div>
+                    </ExpansionPanelSummary>
+                        <ExpansionPanelDetails className="each-employee-payment">
+                          <div className="each-employee-button-container">
+                            <div>
+                              <Button variant="contained" color="secondary">Pay</Button>
+                            </div>
+                            <br />
+                            <div>
+                              <Button variant="outlined" color="primary">Cancel</Button>
+                            </div>
+                            <br />  
+                          </div>
+                          <div className="each-payment-input">
+                            <label>
+                              Gross Wage
+                              <br />
+                              <CurrencyInput
+                                  thousandSeparator=","
+                                  decimalSeparator="."
+                                  precision="2"
+                                  prefix="$"
+                                  allowNegative={false}
+                                  allowEmpty={false}
+                                  value={this.state.grossWages}
+                                  onChangeEvent={this.handleChangeGrossWages} />
+                            </label>
+                          </div>
+                        </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                    }
+                  })
+                }
+          
         </div>
         <pre>
           {JSON.stringify(this.props.state, null, 2)}
         </pre>
-      </>
+      </div>
     )
   }
 }
