@@ -10,6 +10,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+
 class HomePage extends Component {
 
   componentDidMount() {
@@ -20,7 +26,7 @@ class HomePage extends Component {
   handleChangeInput = (event) => {
 
     // Payload is a single business object
-    this.props.dispatch({type: 'SET_SINGLE_BUSINESS', payload: event.target.value});
+    this.props.dispatch({ type: 'FETCH_SINGLE_BUSINESS', payload: event.target.value });
   }
 
   render() {
@@ -41,32 +47,45 @@ class HomePage extends Component {
           </div>
           <div id="select-business">
             {/* <form id="form-select-business"> */}
-              {/* <FormControl> */}
-                <InputLabel>Change Business</InputLabel>
-                <Select
-                  // value={this.props.singleBusiness.businessName}
-                  value=""
-                  onChange={(this.handleChangeInput)}
-                  // onChange={() => handleChangeInput()}
-                  autoWidth
-                >
-                  {this.props.business.length !== 0 &&
-                    this.props.business.map(eachBusiness => {
-                      return <MenuItem
-                        key={eachBusiness.id}
-                        value={eachBusiness}
-                      >
-                        {eachBusiness.businessName}
-                      </MenuItem>
-                    })}
-                </Select>
-              {/* </FormControl> */}
+            {/* <FormControl> */}
+            <InputLabel>Change Business</InputLabel>
+            <Select
+              // value={this.props.singleBusiness.businessName}
+              value=""
+              onChange={(this.handleChangeInput)}
+              // onChange={() => handleChangeInput()}
+              autoWidth
+            >
+              {this.props.business.length !== 0 &&
+                this.props.business.map(eachBusiness => {
+                  return <MenuItem
+                    key={eachBusiness.id}
+                    value={eachBusiness}
+                  >
+                    {eachBusiness.businessName}
+                  </MenuItem>
+                })}
+            </Select>
+            {/* </FormControl> */}
             {/* </form> */}
           </div>
         </div>
-
+        <br />
+        <br />
+        <div id="employees-container">
+          {this.props.employees.length !== 0 &&
+            this.props.employees.map(eachEmployee => {
+              return <div
+                white-space="pre"
+                key={eachEmployee.employee_id}
+                value={eachEmployee.employee_id}
+              >
+                {eachEmployee.firstName}<></>{eachEmployee.lastName}
+              </div>
+            })}
+        </div>
         <pre>
-          {JSON.stringify(this.props, null, 2)}
+          {JSON.stringify(this.props.state, null, 2)}
         </pre>
       </>
     )
@@ -79,6 +98,8 @@ const mapStateToProps = state => ({
   user: state.user,
   business: state.business.businessReducer,
   singleBusiness: state.business.singleBusiness,
+  employees: state.employees.employeesReducer,
+  state,
 });
 
 // this allows us to use <App /> in index.js
