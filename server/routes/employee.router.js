@@ -9,9 +9,10 @@ router.get('/', (req, res) => {
     const getEmployeesQuery = `SELECT * FROM "employee" 
     JOIN "employee_business" ON "employee"."id"="employee_business"."employee_id"
     JOIN "business" ON "business"."id"="employee_business"."business_id"
-    WHERE "user_id"=$1;`;
+    WHERE "user_id"=$1 AND "isDeleted"=$2
+    ORDER BY "firstName";`;
 
-    pool.query(getEmployeesQuery, [req.query.id]).then((result) => {
+    pool.query(getEmployeesQuery, [req.query.id, false]).then((result) => {
         res.send(result.rows);
     }).catch(error => {
         res.sendStatus(500); // Internal Server Error

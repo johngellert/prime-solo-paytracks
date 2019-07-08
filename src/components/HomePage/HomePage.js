@@ -83,7 +83,7 @@ class HomePage extends Component {
                 {eachEmployee.firstName}<></>{eachEmployee.lastName}
               </div>
             })} */}
-
+          <h2>Your Employees</h2>
           {this.props.employees.length !== 0 &&
             this.props.employees.map(eachEmployee => {
               if (eachEmployee.business_id === this.props.singleBusiness.id) {
