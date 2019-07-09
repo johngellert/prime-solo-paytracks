@@ -14,14 +14,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function DatePickers() {
+export default function DatePickers(props) {
   const classes = useStyles();
 
   return (
     <div className={classes.container} noValidate>
       <TextField
         id="date"
-        label="Payment Date"
+        // label="Payment Date"
+        label={props.customLabel}
         type="date"
         defaultValue=""
         className={classes.textField}

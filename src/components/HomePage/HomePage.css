@@ -33,6 +33,7 @@
     opacity: 0.5;
 }
 
-.check-payment {
-
+.required-field::before {
+    content: "*";
+    color: red;
 }

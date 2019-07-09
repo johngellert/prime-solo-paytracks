@@ -12,7 +12,7 @@ function* addEmployee(action) {
     }
 }
 
-// action.payload is the user ID
+// action.payload is the user ID dispatching from
 function* fetchEmployees(action) {
     try {
         console.log('fetch employee saga');
