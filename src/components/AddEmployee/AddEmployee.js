@@ -243,7 +243,7 @@ class AddEmployee extends Component {
                             <br />
                             <label className="required-field">
                                 Employer Pays Employees Portion of FICA
-                        <Switch onChange={this.handleChangeSwitchFica} />
+                                <Switch onChange={this.handleChangeSwitchFica} />
                             </label>
                         </>
                     }

@@ -22,18 +22,93 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import CurrencyInput from 'react-currency-input';
+import DatePickers from '../DatePickers/DatePickers';
+
+import paymentCalculator from '../NetPayCalculation/NetPayCalculation';
 
 class HomePage extends Component {
 
+  state = {
+    selectedEmployee: {},
+    grossWages: 0, // pass as parameter to stateWithholdingCalculation
+    stateWithholding: 0, // set by return of stateWithholdingCalculation
+    federalWithholding: 0, // need to build function in NetPayCalculation
+    employeesSocialSecurityMedicare: 0,
+    employersSocialSecurityMedicare: 0,
+    netPay: 0,
+    isCash: false,
+    checkNumber: null,
+    periodStart: '',
+    periodEnd: '',
+    paymentDate: '',
+    // 7.65% (6.2% for social security tax and 1.45% for Medicare tax) 
+  }
+
+  // when components mounts, fetch all the business for the current user id
   componentDidMount() {
     // fetch businesses for the new user
     this.props.dispatch({ type: 'FETCH_BUSINESSES', payload: this.props.user.id });
   }
 
+  // when user selects a business from the drop down menu, set that business in singleBusiness reducer
   handleChangeInput = (event) => {
-
     // Payload is a single business object
     this.props.dispatch({ type: 'FETCH_SINGLE_BUSINESS', payload: event.target.value });
+  }
+
+  // switch between cash and check payment
+  handleChangeSwitchCash = () => {
+    this.setState({
+      isCash: !this.state.isCash,
+    });
+  }
+
+  // payment changes
+  handleChangeGrossWages = (event) => {
+    this.setState({
+      ...this.state,
+      grossWages: Number(event.target.value.replace(/[^0-9.-]+/g, "")),
+    });
+  }
+
+  handleGrossWagesSubmit = () => {
+    if (this.state.selectedEmployee.isTaxable) {
+      this.setState({
+        stateWithholding: paymentCalculator.stateWithholding(
+          this.state.grossWages,
+          this.state.selectedEmployee.payPeriodFrequency,
+          this.state.selectedEmployee.stateAllowances,
+          this.state.selectedEmployee.maritalStatus
+        ), // end set stateWithholding
+        employeesSocialSecurityMedicare: paymentCalculator.socialSecurityMedicare(
+          this.state.grossWages,
+        ), // end set employeesSocialSecurityMedicare
+        employersSocialSecurityMedicare: paymentCalculator.socialSecurityMedicare(
+          this.state.grossWages,
+        ), // end set employersSocialSecurityMedicare
+      }, 
+        () => {
+          // calculate the employees net pay
+          return this.setState({
+            netPay: paymentCalculator.netPay(
+              this.state.grossWages,
+              this.state.stateWithholding,
+              this.state.federalWithholding,
+              this.state.employeesSocialSecurityMedicare,
+              this.state.selectedEmployee.employerPaysEmployeesFica,
+            )
+          });
+        }
+      );
+    }
+  }
+
+  handleExpansion = (employee) => {
+    this.setState({
+      ...this.state,
+      selectedEmployee: employee,
+
+    })
   }
 
   render() {
@@ -80,37 +155,7 @@ class HomePage extends Component {
         <br />
         <br />
         <div id="employees-container">
-          {/* {this.props.employees.length !== 0 &&
-            this.props.employees.map(eachEmployee => {
-              return <div
-                white-space="pre"
-                key={eachEmployee.employee_id}
-                value={eachEmployee.employee_id}
-              >
-                {eachEmployee.firstName}<></>{eachEmployee.lastName}
-              </div>
-            })} */}
           <h2>Your Employees</h2>
-          {/* {this.props.employees.length !== 0 &&
-            this.props.employees.map(eachEmployee => {
-              if (eachEmployee.business_id === this.props.singleBusiness.id) {
-                return <Card
-                  className="each-employee"
-                  key={eachEmployee.employee_id}
-                  value={eachEmployee.employee_id}
-                  >
-                  <CardContent>
-                    <Typography>
-                      {eachEmployee.firstName}
-                    </Typography>
-                    <Typography>
-                      {eachEmployee.lastName}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              }
-            })
-          } */}
           {this.props.employees.length !== 0 &&
             this.props.employees.map(eachEmployee => {
               if (eachEmployee.business_id === this.props.singleBusiness.id) {
@@ -118,51 +163,99 @@ class HomePage extends Component {
                   className="each-employee"
                   key={eachEmployee.employee_id}
                   value={eachEmployee.employee_id}
+                  onChange={() => this.handleExpansion(eachEmployee)}
+                // onChange={this.handleExpand}
                 >
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                      <div className="each-employee-title">
-                        <div>
-                          {eachEmployee.firstName} {eachEmployee.lastName}
-                        </div>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <div className="each-employee-title">
+                      <div>
+                        <h3>{eachEmployee.firstName} {eachEmployee.lastName}</h3>
                       </div>
-                    </ExpansionPanelSummary>
-                        <ExpansionPanelDetails className="each-employee-payment">
-                          <div className="each-employee-button-container">
-                            <div>
-                              <Button variant="contained" color="secondary">Pay</Button>
-                            </div>
-                            <br />
-                            <div>
-                              <Button variant="outlined" color="primary">Cancel</Button>
-                            </div>
-                            <br />  
-                          </div>
-                          <div className="each-payment-input">
-                            <label>
-                              Gross Wage
-                              <br />
-                              <CurrencyInput
-                                  thousandSeparator=","
-                                  decimalSeparator="."
-                                  precision="2"
-                                  prefix="$"
-                                  allowNegative={false}
-                                  allowEmpty={false}
-                                  value={0}
-                                  // value={this.state.grossWages}
-                                  // onChangeEvent={this.handleChangeGrossWages} 
-                              />
-                            </label>
-                          </div>
-                        </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                    }
-                  })
-                }
-          
+                    </div>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails className="each-employee-payment">
+                    <div className="each-payment-input">
+                      <form
+                        className="gross-wage-form"
+                        onSubmit={this.handleGrossWagesSubmit}>
+                        <label>
+                          Gross Wage
+                                <br />
+                          {/* <input> */}
+                          <CurrencyInput
+                            id="required-field"
+                            thousandSeparator=","
+                            decimalSeparator="."
+                            precision="2"
+                            prefix="$"
+                            allowNegative={false}
+                            allowEmpty={false}
+                            value={this.state.grossWages}
+                            onChangeEvent={this.handleChangeGrossWages}
+                          />
+                          {/* </input>     */}
+                        </label>
+                      </form>
+                      <br />
+                      <label>
+                        Net Pay: {this.state.netPay > 0 ?
+                          '$' + this.state.netPay.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') :
+                          '$0.00'}
+                      </label>
+                      <br />
+                      <label>
+                        <Switch onChange={this.handleChangeSwitchCash} />
+                        {this.state.isCash && 'Cash' || 'Check'}
+                      </label>
+                      <br />
+                      <label>
+                        <input
+                          disabled={this.state.isCash && true || false}
+                          className={this.state.isCash && "cash-payment" || "check-payment"}
+                          placeholder="Check #"
+                        >
+                        </input>
+                      </label>
+                      <br />
+                      <label>
+                        <br />
+                        <div>
+                          <DatePickers customLabel="Period Start" />
+                        </div>
+                        <br />
+                        <div>
+                          <DatePickers customLabel="Period End" />
+                        </div>
+                        <br />
+                        <div>
+                          <DatePickers customLabel="Payment Date" />
+                        </div>
+                        <br />
+                      </label>
+                      <div className="each-employee-button-container">
+                        <br />
+                        <div>
+                          <Button variant="contained" color="secondary">Pay</Button>
+                        </div>
+                        <br />
+                        <div>
+                          <Button variant="outlined" color="primary">Cancel</Button>
+                        </div>
+                        <br />
+                      </div>
+                    </div>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              }
+            })
+          }
+
         </div>
         <pre>
-          {JSON.stringify(this.props.state, null, 2)}
+          Local State{JSON.stringify(this.state, null, 2)}
+        </pre>
+        <pre>
+          Redux State{JSON.stringify(this.props.state, null, 2)}
         </pre>
       </div>
     )

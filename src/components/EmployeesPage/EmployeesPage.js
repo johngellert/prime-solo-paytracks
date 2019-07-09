@@ -22,37 +22,7 @@ class EmployeesPage extends Component {
     return (
       <div id="employees-page">
         <div id="employees-container">
-          {/* {this.props.employees.length !== 0 &&
-            this.props.employees.map(eachEmployee => {
-              return <div
-                white-space="pre"
-                key={eachEmployee.employee_id}
-                value={eachEmployee.employee_id}
-              >
-                {eachEmployee.firstName}<></>{eachEmployee.lastName}
-              </div>
-            })} */}
           <h2>Your Employees</h2>
-          {/* {this.props.employees.length !== 0 &&
-            this.props.employees.map(eachEmployee => {
-              if (eachEmployee.business_id === this.props.singleBusiness.id) {
-                return <Card
-                  className="each-employee"
-                  key={eachEmployee.employee_id}
-                  value={eachEmployee.employee_id}
-                >
-                  <CardContent>
-                    <Typography>
-                      {eachEmployee.firstName}
-                    </Typography>
-                    <Typography>
-                      {eachEmployee.lastName}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              }
-            })
-          } */}
           {this.props.employees.length !== 0 &&
             this.props.employees.map(eachEmployee => {
               if (eachEmployee.business_id === this.props.singleBusiness.id) {
@@ -64,7 +34,7 @@ class EmployeesPage extends Component {
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                       <div className="each-employee-title">
                         <div>
-                          {eachEmployee.firstName} {eachEmployee.lastName}
+                          <h3>{eachEmployee.firstName} {eachEmployee.lastName}</h3>
                         </div>
                       </div>
                     </ExpansionPanelSummary>

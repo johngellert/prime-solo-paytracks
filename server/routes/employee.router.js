@@ -6,9 +6,30 @@ const router = express.Router();
  * GET route template
  */
 router.get('/', (req, res) => {
-    const getEmployeesQuery = `SELECT * FROM "employee" 
+    const getEmployeesQuery = `SELECT 
+    "firstName",
+    "lastName",
+    "employee_business"."employee_id",
+    "business_id",
+    "employee_business"."payPeriodFrequency",
+    "isTaxable",
+    "address"."streetAddress",
+    "address"."city",
+    "address"."state",
+    "address"."zipCode",
+    "contact_info"."mobilePhone",
+    "contact_info"."alternatePhone",
+    "emailAddress",
+    "federalAllowances",
+    "stateAllowances",
+    "maritalStatus",
+    "employerPaysEmployeesFica"
+    FROM "employee" 
     JOIN "employee_business" ON "employee"."id"="employee_business"."employee_id"
     JOIN "business" ON "business"."id"="employee_business"."business_id"
+    LEFT OUTER JOIN "address" ON "address"."employee_id"="employee_business"."employee_id"
+    LEFT OUTER JOIN "contact_info" ON "contact_info"."employee_id"="employee_business"."employee_id"
+    LEFT OUTER JOIN "withholding" ON "withholding"."employee_id"="employee_business"."employee_id"
     WHERE "user_id"=$1 AND "isDeleted"=$2
     ORDER BY "firstName";`;
 
