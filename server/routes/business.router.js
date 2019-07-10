@@ -1,11 +1,12 @@
 const express = require('express');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 
 /**
  * GET route template
  */
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
 
     const getBusinessQuery = `SELECT * FROM "business" WHERE "business"."user_id"=$1;`;
     pool.query(getBusinessQuery, [req.query.id]).then((result) => {
@@ -19,7 +20,7 @@ router.get('/', (req, res) => {
 /**
  * POST route template
  */
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
     console.log(req.body);
     const business = req.body;
     const addBusinessQuery = `INSERT INTO "business" (
