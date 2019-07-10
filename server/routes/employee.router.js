@@ -1,16 +1,18 @@
 const express = require('express');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 
 /**
  * GET route template
  */
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
     const getEmployeesQuery = `SELECT 
     "firstName",
     "lastName",
     "employee_business"."employee_id",
     "business_id",
+    "employee_business"."id" AS "employeeBusinessID",
     "employee_business"."payPeriodFrequency",
     "isTaxable",
     "address"."streetAddress",
@@ -44,7 +46,7 @@ router.get('/', (req, res) => {
 /**
  * POST route template
  */
-router.post('/', async (req, res) => {
+router.post('/', rejectUnauthenticated, async (req, res) => {
     console.log(req.body);
     const client = await pool.connect();
     try {

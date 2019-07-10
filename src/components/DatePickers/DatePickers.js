@@ -18,13 +18,13 @@ export default function DatePickers(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.container} noValidate>
+    <div className={classes.container} color="secondary" noValidate>
       <TextField
         id="date"
-        // label="Payment Date"
         label={props.customLabel}
+        onChange={props.handleChangeDate}
         type="date"
-        defaultValue=""
+        defaultValue={props.defaultValue}
         className={classes.textField}
         InputLabelProps={{
           shrink: true,
@@ -33,3 +33,4 @@ export default function DatePickers(props) {
     </div>
   );
 }
+
