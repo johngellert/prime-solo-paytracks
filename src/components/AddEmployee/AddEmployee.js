@@ -251,8 +251,8 @@ class AddEmployee extends Component {
                     <button onClick={this.handleClickSkip}>Skip</button>
                     <button onClick={this.handleClickNext}>Next</button>
                 </form>
-                <pre>Local State{JSON.stringify(this.state, null, 2)}</pre>
-                <pre>Redux State{JSON.stringify(this.props, null, 2)}</pre>
+                {/* <pre>Local State{JSON.stringify(this.state, null, 2)}</pre>
+                <pre>Redux State{JSON.stringify(this.props, null, 2)}</pre> */}
             </div>
         )
     }

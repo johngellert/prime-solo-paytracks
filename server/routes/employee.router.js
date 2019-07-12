@@ -12,6 +12,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     "lastName",
     "employee_business"."employee_id",
     "business_id",
+    "business"."businessName",
     "employee_business"."id" AS "employeeBusinessID",
     "employee_business"."payPeriodFrequency",
     "isTaxable",
@@ -156,5 +157,114 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
         client.release();
     }
 });
+
+/**
+ * PUT route template
+ */
+router.put('/', rejectUnauthenticated, async (req, res) => {
+    console.log(req.body);
+    const client = await pool.connect();
+    try {
+        const {
+            employee_id,
+            business_id,
+            firstName,
+            lastName,
+            streetAddress,
+            city,
+            state,
+            zipCode,
+            mobilePhone,
+            alternatePhone,
+            emailAddress,
+            payPeriodFrequency,
+            isTaxable,
+            federalAllowances,
+            stateAllowances,
+            maritalStatus,
+            employerPaysEmployeesFica
+        } = req.body;
+
+        const updateEmployeeQuery = `UPDATE "employee"
+            SET "firstName"=$1, 
+            "lastName"=$2
+            WHERE "id"=$3;`;
+
+        const updateEmployeeAddress = `UPDATE "address" 
+            SET
+            "streetAddress"=$1,
+            "city"=$2,
+            "state"=$3,
+            "zipCode"=$4
+            WHERE "employee_id"=$5;`;
+
+        const updateEmployeeContactInfo = `UPDATE "contact_info" SET
+            "mobilePhone"=$1, 
+            "alternatePhone"=$2, 
+            "emailAddress"=$3
+            WHERE "employee_id"=$4;`;
+
+        const updateEmployeeBusinessJoin = `UPDATE "employee_business" SET 
+            "payPeriodFrequency"=$1, 
+            "isTaxable"=$2
+            WHERE "employee_id"=$3 AND "business_id"=$4;`;
+
+        const updateEmployeeWithholding = `UPDATE "withholding" SET
+            "federalAllowances"=$1, 
+            "stateAllowances"=$2, 
+            "maritalStatus"=$3, 
+            "employerPaysEmployeesFica"=$4
+            WHERE "employee_id"=$5;`;    
+
+        await client.query('BEGIN');
+
+        await client.query(updateEmployeeQuery, [
+            firstName,
+            lastName,
+            employee_id
+        ]);
+
+        await client.query(updateEmployeeAddress, [
+            streetAddress,
+            city,
+            state,
+            zipCode,
+            employee_id
+        ]);
+
+        await client.query(updateEmployeeContactInfo, [
+            mobilePhone,
+            alternatePhone,
+            emailAddress,
+            employee_id
+        ]);
+
+        await client.query(updateEmployeeBusinessJoin, [
+            payPeriodFrequency, 
+            isTaxable,
+            employee_id,
+            business_id,
+        ]);
+
+        await client.query(updateEmployeeWithholding, [
+            federalAllowances,
+            stateAllowances,
+            maritalStatus,
+            employerPaysEmployeesFica,
+            employee_id
+        ]);
+
+        await client.query('COMMIT')
+        res.sendStatus(200);
+    } catch (error) {
+        await client.query('ROLLBACK')
+        console.log('Error with UPDATE employee query', error);
+        res.sendStatus(500); // Internal Server Error
+    } finally {
+        client.release();
+    }
+});
+
+
 
 module.exports = router;
