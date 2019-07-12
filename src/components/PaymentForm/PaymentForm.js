@@ -7,7 +7,6 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
@@ -191,7 +190,7 @@ class PaymentFrom extends Component {
     render() {
         const eachEmployee = this.props.eachEmployee;
         const { classes } = this.props;
-        // const { classes } = props;
+
         return (
             <div className={classes.root}>
                 <ExpansionPanel onChange={() => this.handleExpansion(eachEmployee)}>

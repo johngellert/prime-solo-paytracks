@@ -21,7 +21,19 @@ function* fetchEmployees(action) {
         console.log(employeesResponse.data);
         yield put ({type: `SET_EMPLOYEES`, payload: employeesResponse.data});
     } catch (error) {
-        console.log("Error with fetching employees:", error)
+        console.log("Error with fetching employees:", error);
+    }
+}
+
+// action.payload is the an updated employee object
+function* updateEmployee(action) {
+    try{
+        console.log('fetch employee saga');
+        console.log(action.payload);
+        yield axios.put(`api/employee`, action.payload) // updated employee object
+
+    } catch (error) {
+        console.log("Error with updating employee record:", error);
     }
 }
 
@@ -29,6 +41,7 @@ function* fetchEmployees(action) {
 function* employeeSaga() {
     yield takeLatest('POST_REGISTER_EMPLOYEE', addEmployee);
     yield takeLatest('FETCH_EMPLOYEES', fetchEmployees);
+    yield takeLatest('UPDATE_EMPLOYEE', updateEmployee);
 }
 
 export default employeeSaga;

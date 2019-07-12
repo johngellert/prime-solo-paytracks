@@ -20,6 +20,7 @@ import AddBusiness from '../AddBusiness/AddBusiness';
 import AddEmployee from '../AddEmployee/AddEmployee';
 import HomePage from '../HomePage/HomePage';
 import EmployeesPage from '../EmployeesPage/EmployeesPage';
+import EmployeeInformation from '../EmployeeInformation/EmployeeInformation';
 
 import './App.css';
 
@@ -83,8 +84,14 @@ class App extends Component {
 
               <ProtectedRoute
                 exact
-                path="/register/new/employee"
+                path="/register/employee/"
                 component={AddEmployee}
+              />
+
+              <ProtectedRoute
+                exact
+                path="/register/employee/details"
+                component={EmployeeInformation}
               />
 
               <ProtectedRoute
@@ -92,6 +99,8 @@ class App extends Component {
                 path="/my/employees"
                 component={EmployeesPage}
               />
+
+
 
               {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
@@ -101,6 +110,8 @@ class App extends Component {
                 component={InfoPage}
               />
               {/* If none of the other routes matched, we will show a 404. */}
+
+
               <Route render={() => <h1>404</h1>} />
             </Switch>
             <Footer />
