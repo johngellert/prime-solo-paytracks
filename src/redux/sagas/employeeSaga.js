@@ -37,11 +37,22 @@ function* updateEmployee(action) {
     }
 }
 
+// action.payload is and object with the property businessEmployeeID
+// id is matches the employee_business table
+function* deleteEmployee(action) {
+    try {
+        yield axios.delete(`api/employee/${action.payload}`);
+    } catch (error) {
+        console.log("Error with deleting employee record:", error);
+    }
+}
+
 
 function* employeeSaga() {
     yield takeLatest('POST_REGISTER_EMPLOYEE', addEmployee);
     yield takeLatest('FETCH_EMPLOYEES', fetchEmployees);
     yield takeLatest('UPDATE_EMPLOYEE', updateEmployee);
+    yield takeLatest('DELETE_EMPLOYEE', deleteEmployee);
 }
 
 export default employeeSaga;

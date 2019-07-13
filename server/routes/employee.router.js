@@ -265,6 +265,21 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
     }
 });
 
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+    console.log(req.params.id);
+    const deleteEmployeeQuery = `UPDATE "employee_business" SET
+        "isDeleted"=$1
+        WHERE "id"=$2;`
+
+    pool.query(deleteEmployeeQuery, [true, req.params.id]).then(() => {
+        res.sendStatus(200);
+    }).catch(error => {
+        res.sendStatus(500);
+        console.log('Error with DELETE employee query', error);
+        
+    });
+});
+
 
 
 module.exports = router;
