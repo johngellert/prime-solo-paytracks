@@ -119,6 +119,7 @@ class HomePage extends Component {
                   })}
               </Select>
             </FormControl>
+            {/* ADD DELETE HERE */}
             <div id="business-title">
               <h2>{this.state.businessName}</h2>
             </div>

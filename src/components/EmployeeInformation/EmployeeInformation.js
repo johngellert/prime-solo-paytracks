@@ -13,6 +13,7 @@ import Input from '@material-ui/core/Input';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 // Redux
 import { connect } from 'react-redux';
@@ -160,25 +161,25 @@ class EmployeeInformation extends Component {
 
     handleClickSave = () => {
         // if (this.state.employee.isTaxable) {
-            if (checkRequiredFields([
-                this.state.employee.firstName,
-                this.state.employee.lastName,
-                this.state.employee.mobilePhone,
-                this.state.employee.emailAddress,
-                this.state.employee.assignedBusiness,
-                this.state.employee.payPeriodFrequency,
-                this.state.employee.federalAllowances,
-                this.state.employee.stateAllowances,
-                // this.state.employee.maritalStatus,
-            ])) {
-                // will send all fields to saga
-                this.props.dispatch({ type: 'UPDATE_EMPLOYEE', payload: { ...this.state.employee, userId: this.props.user.id } });
-                // this.props.history.push('/home');
-                this.setState({ isEdit: false });
+        if (checkRequiredFields([
+            this.state.employee.firstName,
+            this.state.employee.lastName,
+            this.state.employee.mobilePhone,
+            this.state.employee.emailAddress,
+            this.state.employee.assignedBusiness,
+            this.state.employee.payPeriodFrequency,
+            this.state.employee.federalAllowances,
+            this.state.employee.stateAllowances,
+            // this.state.employee.maritalStatus,
+        ])) {
+            // will send all fields to saga
+            this.props.dispatch({ type: 'UPDATE_EMPLOYEE', payload: { ...this.state.employee, userId: this.props.user.id } });
+            // this.props.history.push('/home');
+            this.setState({ isEdit: false });
 
-            } else {
-                alert('Please complete all required fields OR select "Skip" to cancel adding an employee!');
-            }
+        } else {
+            alert('Please complete all required fields OR select "Skip" to cancel adding an employee!');
+        }
         // } else {
         //     // do not check withholding for required fields
         //     if (checkRequiredFields([
@@ -199,6 +200,11 @@ class EmployeeInformation extends Component {
         // }
     }
 
+    // action.payload is the employee_business id
+    handleClickDelete = (event) => {
+        this.props.dispatch({type: `DELETE_EMPLOYEE`, payload: event});
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -207,14 +213,29 @@ class EmployeeInformation extends Component {
                 {/* <form className="register-employee-form"> */}
                 <form>
                     <div>
-                        <Button
-                            variant="contained"
-                            size="small"
-                            color="secondary"
-                            onClick={this.handleClickEdit}
-                        >
-                            Edit
-                    </Button>
+                        <Grid container spacing={6}>
+                            <Grid item xs={6}>
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    color="secondary"
+                                    onClick={this.handleClickEdit}
+                                >
+                                    Edit
+                                </Button>
+                            </Grid>
+                            <Grid item xs ={6}>
+                                <Button
+                                    // value={this.props.eachEmployee.employeeBusinessID}
+                                    variant="outlined"
+                                    size="small"
+                                    color="primary"
+                                    onClick={() => {this.handleClickDelete(this.props.eachEmployee.employeeBusinessID)}}
+                                >
+                                    Delete
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </div>
                     <h3>Employee Name</h3>
                     <h4><em>Business / Service: {this.state.employee.businessName}</em></h4>
@@ -223,7 +244,7 @@ class EmployeeInformation extends Component {
                     <TextField disabled={this.state.isEdit === false && true} required defaultValue={this.state.employee.lastName} className={classes.textField} label="Last Name" onChange={this.handleChangeInput('lastName')}></TextField>
                     <h3>Mailing Address</h3>
                     <TextField disabled={this.state.isEdit === false && true} defaultValue={this.state.employee.streetAddress} className={classes.textField} label="Street Address" onChange={this.handleChangeInput('streetAddress')}></TextField>
-                    <TextField disabled={this.state.isEdit === false && true}defaultValue={this.state.employee.city} className={classes.textField} label="City" onChange={this.handleChangeInput('city')}></TextField>
+                    <TextField disabled={this.state.isEdit === false && true} defaultValue={this.state.employee.city} className={classes.textField} label="City" onChange={this.handleChangeInput('city')}></TextField>
                     <TextField disabled={this.state.isEdit === false && true} defaultValue={this.state.employee.state} className={classes.textField} label="State" onChange={this.handleChangeInput('state')}></TextField>
                     <TextField disabled={this.state.isEdit === false && true} defaultValue={this.state.zipCode} className={classes.textField} label="Zip Code" onChange={this.handleChangeInput('zipCode')}></TextField>
                     <h3>Contact Information</h3>
@@ -267,10 +288,10 @@ class EmployeeInformation extends Component {
                             name="pay-period-frequency"
                         >
                             <MenuItem value={360} className={classes.menu}>360 - Paid Daily</MenuItem>
-                            <MenuItem value={52}  className={classes.menu}>52 - Paid Weekly</MenuItem>
-                            <MenuItem value={26}  className={classes.menu}>26 - Paid Every Two Weeks</MenuItem>
-                            <MenuItem value={24}  className={classes.menu}>24 - Paid Twice a Month</MenuItem>
-                            <MenuItem value={12}  className={classes.menu}>12 - Paid Once a Month</MenuItem>
+                            <MenuItem value={52} className={classes.menu}>52 - Paid Weekly</MenuItem>
+                            <MenuItem value={26} className={classes.menu}>26 - Paid Every Two Weeks</MenuItem>
+                            <MenuItem value={24} className={classes.menu}>24 - Paid Twice a Month</MenuItem>
+                            <MenuItem value={12} className={classes.menu}>12 - Paid Once a Month</MenuItem>
                         </Select>
                     </FormControl>
                     <br />
@@ -280,24 +301,24 @@ class EmployeeInformation extends Component {
                         </InputLabel>
                         <br />
                         {this.state.employee.isTaxable ?
-                        <span>
-                            <Switch
-                                disabled={this.state.isEdit === false && true}  
-                                onChange={this.handleChangeSwitchTaxable} 
-                                color="secondary" 
-                                input={<Input name="is-taxable" id="is-taxable-label" />}
-                                checked
-                            /> {'Yes'}
-                        </span>
-                        :
-                        <span>
-                            <Switch
-                                disabled={this.state.isEdit === false && true} 
-                                onChange={this.handleChangeSwitchTaxable} 
-                                color="secondary"
-                                input={<Input name="is-taxable" id="is-taxable-label" />}
-                            />{'No'}
-                        </span>
+                            <span>
+                                <Switch
+                                    disabled={this.state.isEdit === false && true}
+                                    onChange={this.handleChangeSwitchTaxable}
+                                    color="secondary"
+                                    input={<Input name="is-taxable" id="is-taxable-label" />}
+                                    checked
+                                /> {'Yes'}
+                            </span>
+                            :
+                            <span>
+                                <Switch
+                                    disabled={this.state.isEdit === false && true}
+                                    onChange={this.handleChangeSwitchTaxable}
+                                    color="secondary"
+                                    input={<Input name="is-taxable" id="is-taxable-label" />}
+                                />{'No'}
+                            </span>
                         }
                     </FormControl>
                     <br />
@@ -310,9 +331,9 @@ class EmployeeInformation extends Component {
                             <FormControl className={classes.selectField}>
                                 <InputLabel required shrink htmlFor="marital-status-label">
                                     Marital Status
-                                </InputLabel>     
+                                </InputLabel>
                                 <Select
-                                    input={<Input name="marital-status" id="marital-status-label"/>}
+                                    input={<Input name="marital-status" id="marital-status-label" />}
                                     disabled={this.state.isEdit === false && true}
                                     required={this.state.employee.isTaxable}
                                     value={this.state.employee.maritalStatus}
@@ -331,17 +352,17 @@ class EmployeeInformation extends Component {
                                     <span>
                                         <Switch
                                             checked
-                                            disabled={this.state.isEdit === false && true} 
-                                            required={this.state.employee.isTaxable} 
+                                            disabled={this.state.isEdit === false && true}
+                                            required={this.state.employee.isTaxable}
                                             onChange={this.handleChangeSwitchFica}
                                             input={<Input name="fica" id="fica-label" />}
                                         /> {'Yes'}
                                     </span>
                                     :
                                     <span>
-                                        <Switch 
-                                            disabled={this.state.isEdit === false && true} 
-                                            required={this.state.employee.isTaxable} 
+                                        <Switch
+                                            disabled={this.state.isEdit === false && true}
+                                            required={this.state.employee.isTaxable}
                                             onChange={this.handleChangeSwitchFica}
                                             input={<Input name="fica" id="fica-label" />}
                                         /> {'No'}
