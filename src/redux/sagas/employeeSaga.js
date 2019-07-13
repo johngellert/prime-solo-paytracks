@@ -30,8 +30,8 @@ function* updateEmployee(action) {
     try{
         console.log('fetch employee saga');
         console.log(action.payload);
-        yield axios.put(`api/employee`, action.payload) // updated employee object
-
+        yield axios.put(`api/employee`, action.payload); // updated employee object
+        yield put ({type: `FETCH_EMPLOYEES`});
     } catch (error) {
         console.log("Error with updating employee record:", error);
     }
@@ -42,6 +42,7 @@ function* updateEmployee(action) {
 function* deleteEmployee(action) {
     try {
         yield axios.delete(`api/employee/${action.payload}`);
+        yield put ({type: `FETCH_EMPLOYEES`});
     } catch (error) {
         console.log("Error with deleting employee record:", error);
     }
