@@ -52,10 +52,10 @@ class App extends Component {
 
   render() {
     return (
-        <div id="body-user-mode">
+        <div>
         <MuiThemeProvider theme={theme}>
           <Router>
-            <Nav />
+            {/* <Nav /> */}
             <Switch>
               {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
               <Redirect exact from="/" to="/home" />
