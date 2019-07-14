@@ -31,20 +31,20 @@ const styles = theme => ({
         flexWrap: 'wrap',
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        marginLeft: theme.spacing(),
+        marginRight: theme.spacing(),
         marginBottom: theme.spacing(2),
         width: 200,
     },
     selectField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        marginLeft: theme.spacing(),
+        marginRight: theme.spacing(),
         marginBottom: theme.spacing(2),
         width: 200,
     },
     switch: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        marginLeft: theme.spacing(),
+        marginRight: theme.spacing(),
         marginBottom: theme.spacing(2),
         width: 200,
     },
@@ -336,7 +336,7 @@ class EmployeeInformation extends Component {
                                     input={<Input name="marital-status" id="marital-status-label" />}
                                     disabled={this.state.isEdit === false && true}
                                     required={this.state.employee.isTaxable}
-                                    value={this.state.employee.maritalStatus}
+                                    value={''}
                                     onChange={this.handleChangeInput('maritalStatus')}
                                 >
                                     <MenuItem value='Single'>Single</MenuItem>

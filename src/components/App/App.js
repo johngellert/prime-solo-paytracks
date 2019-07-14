@@ -52,9 +52,9 @@ class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <Router>
-          <div>
+        <div id="body-user-mode">
+        <MuiThemeProvider theme={theme}>
+          <Router>
             <Nav />
             <Switch>
               {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
@@ -100,8 +100,6 @@ class App extends Component {
                 component={EmployeesPage}
               />
 
-
-
               {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
               <ProtectedRoute
@@ -114,12 +112,20 @@ class App extends Component {
 
               <Route render={() => <h1>404</h1>} />
             </Switch>
-            <Footer />
-          </div>
-        </Router>
-      </MuiThemeProvider>
+          </Router>
+        </MuiThemeProvider>
+        <pre>
+          {JSON.stringify(this.props.loginMode, null, 2)}
+        </pre>
+        </div>
     )
   }
 }
 
-export default connect()(App);
+const mapStateToProps = (state) => {
+  return {
+    loginMode: state.loginMode,
+  }
+}
+
+export default connect(mapStateToProps)(App);
