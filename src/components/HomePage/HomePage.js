@@ -34,10 +34,10 @@ const styles = theme => ({
   //   width: 200,
   // },
   formControl: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-    margin: theme.spacing.unit,
+    marginLeft: theme.spacing(),
+    marginRight: theme.spacing(),
+    marginBottom: theme.spacing(),
+    margin: theme.spacing(),
     minWidth: 200,
   },
   // dense: {
