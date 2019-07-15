@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import PropTypes from 'prop-types';
-// import classNames from 'classnames';
+import classNames from 'classnames';
 
 
 // From inputs

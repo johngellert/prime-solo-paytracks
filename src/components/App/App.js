@@ -21,6 +21,7 @@ import AddEmployee from '../AddEmployee/AddEmployee';
 import HomePage from '../HomePage/HomePage';
 import EmployeesPage from '../EmployeesPage/EmployeesPage';
 import EmployeeInformation from '../EmployeeInformation/EmployeeInformation';
+import NavDrawer from '../NavDrawer/NavDrawer';
 
 import './App.css';
 
@@ -56,6 +57,7 @@ class App extends Component {
         <MuiThemeProvider theme={theme}>
           <Router>
             {/* <Nav /> */}
+            {this.props.user.id && <NavDrawer />}
             <Switch>
               {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
               <Redirect exact from="/" to="/home" />
@@ -125,6 +127,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     loginMode: state.loginMode,
+    user: state.user,
   }
 }
 

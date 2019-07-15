@@ -81,12 +81,12 @@ class HomePage extends Component {
 
     return (
       <div id="home-page">
-        <div id="welcome-container">
+        {/* <div id="welcome-container">
           <div id="welcome">
             <strong>Welcome, {this.props.user.username}! </strong>
           </div>
-          {/* <LogOutButton className="log-in" /> */}
-        </div >
+          <LogOutButton className="log-in" />
+        </div > */}
         <div id="business-select-container">
           <div id="select-business">
             <FormControl variant="outlined" className={classes.formControl}>
@@ -129,7 +129,7 @@ class HomePage extends Component {
         <Dashboard />
         <br />
         <div id="employees-container">
-          <h2>Your Employees</h2>
+          <h2>Record Wages</h2>
           {this.props.employees.length !== 0 &&
             this.props.employees.map(eachEmployee => {
               if (eachEmployee.business_id === this.props.singleBusiness.id) {
