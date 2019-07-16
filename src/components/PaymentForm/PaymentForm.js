@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Swal from 'sweetalert2';
 
 // Expansion panel 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -13,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import PropTypes from 'prop-types';
-// import classNames from 'classnames';
+import classNames from 'classnames';
 
 
 // From inputs
@@ -23,6 +24,8 @@ import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
 
 import paymentCalculator from '../NetPayCalculation/NetPayCalculation';
+
+import './PaymentForm.css';
 
 const styles = theme => ({
     root: {
@@ -125,6 +128,10 @@ class PaymentFrom extends Component {
                     });
                 }
             );
+        } else {
+            this.setState({
+                netPay: this.state.grossWages,
+            })
         }
     }
 
@@ -145,7 +152,11 @@ class PaymentFrom extends Component {
         console.log(this.state);
         // dispatch to payment saga
         this.props.dispatch({ type: 'POST_PAYMENT_RECORD', payload: this.state });
-        // this.handleClickCancel(); // clears state and input values
+        this.handleClickCancel(); // clears state and input values
+        Swal.fire({
+            type: 'success',
+            title: 'Payment Recorded!',
+        });
     }
 
     handleClickCancel = () => {
@@ -230,6 +241,13 @@ class PaymentFrom extends Component {
                                     />
                                     {/* </input>     */}
                                 </label>
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    color="secondary"
+                                    onClick={this.handleGrossWagesSubmit}>
+                                        Calculate Net
+                                </Button>
                             </form>
                             <br />
                             <label>
@@ -273,8 +291,12 @@ class PaymentFrom extends Component {
                             </label>
                         </div>
                         {/* <div className={classNames({classes.column, classes.helper})}> */}
-                        <div className={classes.helper}>
+                        <div white-space="pre" className={classes.helper}>
                             <h3>Withholding</h3>
+                            <h4>State: ${this.state.stateWithholding !== 0 && this.state.stateWithholding.toFixed(2) || 0.00}</h4>
+                            <h4>Federal: ${this.state.federalWithholding !== 0 && this.state.federalWithholding.toFixed(2) || 0.00 }</h4>
+                            <h4>Employee FICA: ${this.state.employeesSocialSecurityMedicare !== 0 && this.state.employeesSocialSecurityMedicare.toFixed(2) || 0.00}</h4>
+                            <h4>Employer FICA: ${this.state.employersSocialSecurityMedicare !== 0 && this.state.employersSocialSecurityMedicare.toFixed(2) || 0.00}</h4>
                         </div>
                     </ExpansionPanelDetails>
                     <ExpansionPanelActions>

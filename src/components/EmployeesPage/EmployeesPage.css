@@ -1,8 +1,10 @@
 
 #employees-page{
-    width: 1000px;
-    margin: 0px auto;
+    width: 70%;
+    margin-top: 5%;
+    margin-left: 15%;
 }
+
 .each-employee-title {
     white-space: pre;
 }

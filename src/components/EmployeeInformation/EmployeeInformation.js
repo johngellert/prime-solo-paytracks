@@ -1,6 +1,8 @@
 
 // React
 import React, { Component } from 'react';
+import Swal from 'sweetalert2';
+import './EmployeeInformation.css';
 
 // Material-UI
 import Switch from '@material-ui/core/Switch';
@@ -27,8 +29,8 @@ import checkRequiredFields from '../CheckRequiredFields/CheckRequiredFields';
 // Styles
 const styles = theme => ({
     container: {
-        display: 'flex',
-        flexWrap: 'wrap',
+        // display: 'flex',
+        // flexWrap: 'wrap',
     },
     textField: {
         marginLeft: theme.spacing(),
@@ -174,35 +176,26 @@ class EmployeeInformation extends Component {
         ])) {
             // will send all fields to saga
             this.props.dispatch({ type: 'UPDATE_EMPLOYEE', payload: { ...this.state.employee, userId: this.props.user.id } });
-            // this.props.history.push('/home');
             this.setState({ isEdit: false });
+            // this.props.history.push('/home');
 
         } else {
             alert('Please complete all required fields OR select "Skip" to cancel adding an employee!');
         }
-        // } else {
-        //     // do not check withholding for required fields
-        //     if (checkRequiredFields([
-        //         this.state.employee.firstName,
-        //         this.state.employee.lastName,
-        //         this.state.employee.mobilePhone,
-        //         this.state.employee.emailAddress,
-        //         this.state.employee.assignedBusiness,
-        //         this.state.employee.payPeriodFrequency,
-        //     ])) {
-        //         // will not send withholding information to saga
-        //         this.props.dispatch({ type: 'UPDATE_EMPLOYEE', payload: { ...this.state.employee, userId: this.props.user.id } });
-        //         // this.props.history.push('/home');
-        //         this.setState({ isEdit: false });
-        //     } else {
-        //         alert('Please complete all required fields OR select "Skip" to cancel adding an employee!');
-        //     }
-        // }
+        Swal.fire({
+            type: 'success',
+            title: 'Employee Updated!',
+        });
     }
 
     // action.payload is the employee_business id
     handleClickDelete = (event) => {
         this.props.dispatch({type: `DELETE_EMPLOYEE`, payload: event});
+        Swal.fire({
+            type: 'success',
+            title: 'Employee Deleted!',
+        });
+        
     }
 
     render() {
@@ -211,7 +204,7 @@ class EmployeeInformation extends Component {
         return (
             <div>
                 {/* <form className="register-employee-form"> */}
-                <form>
+                <form className="payment-form">
                     <div>
                         <Grid container spacing={6}>
                             <Grid item xs={6}>
@@ -389,8 +382,8 @@ class EmployeeInformation extends Component {
                         Save
                     </Button>
                 </form>
-                <pre>Local State{JSON.stringify(this.state, null, 2)}</pre>
-                <pre>Redux State{JSON.stringify(this.props, null, 2)}</pre>
+                {/* <pre>Local State{JSON.stringify(this.state, null, 2)}</pre>
+                <pre>Redux State{JSON.stringify(this.props, null, 2)}</pre> */}
             </div>
         )
     }

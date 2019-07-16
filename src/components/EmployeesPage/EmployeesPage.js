@@ -53,9 +53,10 @@ class EmployeesPage extends Component {
 
   handleClickAddEmployee = () => {
     console.log('new taco');
-    this.setState({
-      addEmployee: true,
-    });
+    // this.setState({
+    //   addEmployee: true,
+    // });
+    this.props.history.push('/register/employee/')
   }
 
   handleSaveEmployee = () => {
@@ -79,17 +80,18 @@ class EmployeesPage extends Component {
           >
             Add Employee
           </Button>
-          <Modal
-          // aria-labelledby="simple-modal-title"
-          // aria-describedby="simple-modal-description"
+          {/* <Modal
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
           open={this.state.addEmployee}
           onClose={this.handleSaveEmployee}
         >
-          {/* <div style={getModalStyle()} className={classes.paper}>
+          <div style={getModalStyle()} className={classes.paper}>
             <AddEmployee />
-          </div> */}
+          </div>
             <AddEmployee />
-        </Modal>
+        </Modal> */}
+
           {this.props.employees.length !== 0 &&
             this.props.employees.map(eachEmployee => {
               if (eachEmployee.business_id === this.props.singleBusiness.id) {
@@ -119,23 +121,15 @@ class EmployeesPage extends Component {
                       <EmployeeInformation eachEmployee={eachEmployee} />
 
                     </div>
-                    <div>
-                      Employee ID: {eachEmployee.employee_id}
-                      <br />
-                      Pay Period Frequency: {eachEmployee.payPeriodFrequency}
-                      <br />
-                      Taxable Employee: {eachEmployee.isTaxable && 'Yes' || 'No'}
-                      <br />
-                    </div>
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
               }
             })
           }
         </div>
-        <pre>
+        {/* <pre>
           {JSON.stringify(this.props.state, null, 2)}
-        </pre>
+        </pre> */}
       </div>
     )
   }

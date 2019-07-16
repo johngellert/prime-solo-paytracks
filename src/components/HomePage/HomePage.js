@@ -12,6 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Button from '@material-ui/core/Button';
 
 import PaymentFrom from '../PaymentForm/PaymentForm';
 import Dashboard from '../Dashboard/Dashboard';
@@ -76,17 +77,21 @@ class HomePage extends Component {
     })
   }
 
+  handleAddBusiness = () => {
+    this.props.history.push('/register/business');
+  }
+
   render() {
     const { classes } = this.props;
 
     return (
       <div id="home-page">
-        <div id="welcome-container">
+        {/* <div id="welcome-container">
           <div id="welcome">
             <strong>Welcome, {this.props.user.username}! </strong>
           </div>
-          {/* <LogOutButton className="log-in" /> */}
-        </div >
+          <LogOutButton className="log-in" />
+        </div > */}
         <div id="business-select-container">
           <div id="select-business">
             <FormControl variant="outlined" className={classes.formControl}>
@@ -119,6 +124,14 @@ class HomePage extends Component {
                   })}
               </Select>
             </FormControl>
+            <br />
+            <Button
+                variant="contained"
+                size="small"
+                color="secondary"
+                onClick={this.handleAddBusiness}>
+                  Add Business
+              </Button>
             {/* ADD DELETE HERE */}
             <div id="business-title">
               <h2>{this.state.businessName}</h2>
@@ -126,10 +139,10 @@ class HomePage extends Component {
           </div>
         </div>
         <br />
-        <Dashboard />
+        {/* <Dashboard /> */}
         <br />
         <div id="employees-container">
-          <h2>Your Employees</h2>
+          <h2>Record Wages</h2>
           {this.props.employees.length !== 0 &&
             this.props.employees.map(eachEmployee => {
               if (eachEmployee.business_id === this.props.singleBusiness.id) {
@@ -138,12 +151,12 @@ class HomePage extends Component {
             })
           }
         </div>
-        <pre>
+        {/* <pre>
           Local State{JSON.stringify(this.state, null, 2)}
         </pre>
         <pre>
           Redux State{JSON.stringify(this.props.state, null, 2)}
-        </pre>
+        </pre> */}
       </div>
     )
   }

@@ -3,6 +3,8 @@
     background-color: #EDEEEE;
     color: #424848;
     position: fixed;
+    top: 0;
+    left: 0;
     height: 100%;
     width: 100%;
     margin: 0px;
@@ -11,6 +13,7 @@
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+
 }
 
 #login-form {
@@ -22,5 +25,6 @@
     margin-top: 15%;
     height: 350px;
     width: 20%;
+    min-width: 300px;
 }
 

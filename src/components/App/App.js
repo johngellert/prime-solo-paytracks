@@ -21,6 +21,7 @@ import AddEmployee from '../AddEmployee/AddEmployee';
 import HomePage from '../HomePage/HomePage';
 import EmployeesPage from '../EmployeesPage/EmployeesPage';
 import EmployeeInformation from '../EmployeeInformation/EmployeeInformation';
+import NavDrawer from '../NavDrawer/NavDrawer';
 
 import './App.css';
 
@@ -52,10 +53,11 @@ class App extends Component {
 
   render() {
     return (
-        <div id="body-user-mode">
+        <div>
         <MuiThemeProvider theme={theme}>
           <Router>
-            <Nav />
+            {/* <Nav /> */}
+            {this.props.user.id && <NavDrawer />}
             <Switch>
               {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
               <Redirect exact from="/" to="/home" />
@@ -114,9 +116,9 @@ class App extends Component {
             </Switch>
           </Router>
         </MuiThemeProvider>
-        <pre>
+        {/* <pre>
           {JSON.stringify(this.props.loginMode, null, 2)}
-        </pre>
+        </pre> */}
         </div>
     )
   }
@@ -125,6 +127,7 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     loginMode: state.loginMode,
+    user: state.user,
   }
 }
 

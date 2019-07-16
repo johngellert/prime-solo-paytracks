@@ -1,8 +1,13 @@
 /* .register-employee-form {
-    background-color: #dbd5d5;
-    width: 30%;
-    height: 750px;
-    margin: 20px auto;
+    height: auto;
+    width: auto;
     padding: 25px;
     border-radius: 2px;
 } */
+
+#add-employee-form {
+    width: 50%;
+    margin-top: 5%;
+    margin-left: 15%;
+    color: inherit;
+}
