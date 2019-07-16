@@ -12,6 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Button from '@material-ui/core/Button';
 
 import PaymentFrom from '../PaymentForm/PaymentForm';
 import Dashboard from '../Dashboard/Dashboard';
@@ -76,6 +77,10 @@ class HomePage extends Component {
     })
   }
 
+  handleAddBusiness = () => {
+    this.props.history.push('/register/business');
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -119,6 +124,14 @@ class HomePage extends Component {
                   })}
               </Select>
             </FormControl>
+            <br />
+            <Button
+                variant="contained"
+                size="small"
+                color="secondary"
+                onClick={this.handleAddBusiness}>
+                  Add Business
+              </Button>
             {/* ADD DELETE HERE */}
             <div id="business-title">
               <h2>{this.state.businessName}</h2>
@@ -126,7 +139,7 @@ class HomePage extends Component {
           </div>
         </div>
         <br />
-        <Dashboard />
+        {/* <Dashboard /> */}
         <br />
         <div id="employees-container">
           <h2>Record Wages</h2>
@@ -138,12 +151,12 @@ class HomePage extends Component {
             })
           }
         </div>
-        <pre>
+        {/* <pre>
           Local State{JSON.stringify(this.state, null, 2)}
         </pre>
         <pre>
           Redux State{JSON.stringify(this.props.state, null, 2)}
-        </pre>
+        </pre> */}
       </div>
     )
   }

@@ -116,9 +116,9 @@ class App extends Component {
             </Switch>
           </Router>
         </MuiThemeProvider>
-        <pre>
+        {/* <pre>
           {JSON.stringify(this.props.loginMode, null, 2)}
-        </pre>
+        </pre> */}
         </div>
     )
   }

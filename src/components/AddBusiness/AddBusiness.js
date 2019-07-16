@@ -31,7 +31,7 @@ class AddBusiness extends Component {
         })
     }
 
-    handleClickSkip = () => {
+    handleClickCancel = () => {
         this.setState ({
             businessName: '',
             employerIdentificationNumber: '',
@@ -49,10 +49,10 @@ class AddBusiness extends Component {
     }
 
     // clean code
-    handleClickNext = () => {
+    handleClickSave = () => {
         if (checkRequiredFields([this.state.businessName, this.state.serviceType, this.state.email])) {
             this.props.dispatch({type: 'POST_REGISTER_BUSINESS', payload: {...this.state, userId: this.props.user.id}});
-            this.props.history.push('/register/new/employee');
+            this.props.history.push('/home');
         }
         else {
             alert('Please complete all required fields OR select "Skip" to cancel adding a business!');
@@ -61,8 +61,8 @@ class AddBusiness extends Component {
 
     render() {
         return (
-            <div>
-                <form className="register-business-form">
+            <div className="add-business-form">
+                <form >
                     <h1>Register Your Business</h1>
                     <label  className="required-field">
                         Business Name
@@ -119,11 +119,11 @@ class AddBusiness extends Component {
                     <input onChange={this.handleChangeInput('email')}></input>
                     </label>
                     <br />
-                    <button onClick={this.handleClickSkip}>Skip</button>
-                    <button onClick={this.handleClickNext}>Next</button>
+                    <button onClick={this.handleClickCancel}>Cancel</button>
+                    <button onClick={this.handleClickSave}>Save</button>
                 </form>
-                <pre>Local State{JSON.stringify(this.state, null, 2)}</pre>
-                <pre>redux State{JSON.stringify(this.props.state, null, 2)}</pre>
+                {/* <pre>Local State{JSON.stringify(this.state, null, 2)}</pre>
+                <pre>redux State{JSON.stringify(this.props.state, null, 2)}</pre> */}
             </div>
         )
     }
