@@ -190,13 +190,14 @@ class AddEmployee extends Component {
             alternatePhone: null, // contact table
             emailAddress: 'kathy.peterson@gmail.com', // contact table, not null
             assignedBusiness: '', // select current business id from redux state, insert into the employee_business table
-            payPeriodFrequency: 26, // employee_business table, not null
+            payPeriodFrequency: 52, // employee_business table, not null
             isTaxable: false, // employee_business table, not null
             federalAllowances: '', // withholding table, not null
             stateAllowances: '', // withholding table, not null
             maritalStatus: '', // withholding table, not null (select with options)
             employerPaysEmployeesFica: false, // withholding table, not null
         });
+
         
     }
 
@@ -211,17 +212,17 @@ class AddEmployee extends Component {
                     <h3 onClick={this.handleClickAddSampleEmployee}>Employee Name</h3>
                     {/* <h4><em>Business / Service: {this.state.employee.businessName}</em></h4> */}
                     <br />
-                    <TextField required defaultValue={this.state.firstName} className={classes.textField} label="First Name" onChange={this.handleChangeInput('firstName')}></TextField>
-                    <TextField required defaultValue={this.state.lastName} className={classes.textField} label="Last Name" onChange={this.handleChangeInput('lastName')}></TextField>
+                    <TextField required value={this.state.firstName} className={classes.textField} label="First Name" onChange={this.handleChangeInput('firstName')}></TextField>
+                    <TextField required value={this.state.lastName} className={classes.textField} label="Last Name" onChange={this.handleChangeInput('lastName')}></TextField>
                     <h3>Mailing Address</h3>
-                    <TextField defaultValue={this.state.streetAddress} className={classes.textField} label="Street Address" onChange={this.handleChangeInput('streetAddress')}></TextField>
-                    <TextField defaultValue={this.state.city} className={classes.textField} label="City" onChange={this.handleChangeInput('city')}></TextField>
-                    <TextField defaultValue={this.state.state} className={classes.textField} label="State" onChange={this.handleChangeInput('state')}></TextField>
-                    <TextField defaultValue={this.state.zipCode} className={classes.textField} label="Zip Code" onChange={this.handleChangeInput('zipCode')}></TextField>
+                    <TextField value={this.state.streetAddress} className={classes.textField} label="Street Address" onChange={this.handleChangeInput('streetAddress')}></TextField>
+                    <TextField value={this.state.city} className={classes.textField} label="City" onChange={this.handleChangeInput('city')}></TextField>
+                    <TextField value={this.state.state} className={classes.textField} label="State" onChange={this.handleChangeInput('state')}></TextField>
+                    <TextField value={this.state.zipCode} className={classes.textField} label="Zip Code" onChange={this.handleChangeInput('zipCode')}></TextField>
                     <h3>Contact Information</h3>
-                    <TextField required defaultValue={this.state.mobilePhone} className={classes.textField} label="Mobile Phone" onChange={this.handleChangeInput('mobilePhone')}></TextField>
-                    <TextField defaultValue={this.state.alternatePhone} className={classes.textField} label="Alternate Phone" onChange={this.handleChangeInput('alternatePhone')}></TextField>
-                    <TextField required defaultValue={this.state.emailAddress} className={classes.textField} label="Email Address" onChange={this.handleChangeInput('emailAddress')}></TextField>
+                    <TextField required value={this.state.mobilePhone} className={classes.textField} label="Mobile Phone" onChange={this.handleChangeInput('mobilePhone')}></TextField>
+                    <TextField value={this.state.alternatePhone} className={classes.textField} label="Alternate Phone" onChange={this.handleChangeInput('alternatePhone')}></TextField>
+                    <TextField required value={this.state.emailAddress} className={classes.textField} label="Email Address" onChange={this.handleChangeInput('emailAddress')}></TextField>
                     <br />
                     <h3>Employment Information</h3>
                     <FormControl className={classes.selectField}>
@@ -359,8 +360,8 @@ class AddEmployee extends Component {
                         Save
                     </Button>
                 </form>
-                {/* <pre>Local State{JSON.stringify(this.state, null, 2)}</pre>
-                <pre>Redux State{JSON.stringify(this.props, null, 2)}</pre> */}
+                <pre>Local State{JSON.stringify(this.state, null, 2)}</pre>
+                <pre>Redux State{JSON.stringify(this.props, null, 2)}</pre>
             </div>
 
             // <div id="add-employee-form">

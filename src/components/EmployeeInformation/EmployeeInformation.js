@@ -176,8 +176,8 @@ class EmployeeInformation extends Component {
         ])) {
             // will send all fields to saga
             this.props.dispatch({ type: 'UPDATE_EMPLOYEE', payload: { ...this.state.employee, userId: this.props.user.id } });
-            // this.props.history.push('/home');
             this.setState({ isEdit: false });
+            // this.props.history.push('/home');
 
         } else {
             alert('Please complete all required fields OR select "Skip" to cancel adding an employee!');
@@ -191,6 +191,11 @@ class EmployeeInformation extends Component {
     // action.payload is the employee_business id
     handleClickDelete = (event) => {
         this.props.dispatch({type: `DELETE_EMPLOYEE`, payload: event});
+        Swal.fire({
+            type: 'success',
+            title: 'Employee Deleted!',
+        });
+        
     }
 
     render() {
