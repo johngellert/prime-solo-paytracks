@@ -8,12 +8,12 @@
 
 .nav {
   overflow: hidden;
-  background-color: #424848;
+  background-color: #E9E7DE;
 }
 
 .nav-link {
   float: left;
-  color: inherit;
+  color: #424848;
   /* background-color: #424848; */
   text-align: center;
   /* padding: 24px 10px; */
@@ -44,7 +44,7 @@
 
 #nav-link-log-out {
     float: left;
-    color: inherit;
+    color: #424848;
     /* background-color: #424848; */
     /* text-align: center; */
     /* padding: 24px 10px; */
