@@ -5,6 +5,8 @@ import { TextField, withStyles, ListItemSecondaryAction } from '@material-ui/cor
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 
+import smallLogo from './400dpiLogoCropped.png';
+
 const styles = theme => ({
   // container: {
   //     display: 'flex',
@@ -14,13 +16,18 @@ const styles = theme => ({
     marginLeft: theme.spacing(),
     marginRight: theme.spacing(),
     marginBottom: theme.spacing(2),
-    width: 200,
+    width: 300,
   },
   loginButton: {
     marginLeft: theme.spacing(),
     marginRight: theme.spacing(),
     marginBottom: theme.spacing(2),
-    width: 200,
+    width: 300,
+  },
+  logo: {
+    height: 80,
+    marginTop: 10,
+    marginBottom: 20,
   }
 })
 
@@ -65,7 +72,8 @@ class LoginPage extends Component {
           </h2>
         )}
         <form onSubmit={this.login} id="login-form">
-          <h1>Login</h1>
+          <img className={classes.logo} src={smallLogo}/>
+          <h3>Login</h3>
           <div>
             <TextField
               className={classes.textField}
