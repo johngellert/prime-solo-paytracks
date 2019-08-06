@@ -1,16 +1,9 @@
-# Prime Project
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+# PayTracks
+Developed an application for household employers to track payroll information for employees. Household employers have similar payroll responsibilities as small businesses, but without the resources to complete these task efficiently, so I developed PayTracks. Users of this application can create a business entity, add employees, and record wages paid to employees. Upon recording gross wages, the application automatically calculates state, federal, and social security and medicare withholdings according to each employee’s  withholding criteria and generates a net payment amount.
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
-
-## Download (Don't Clone) This Repository
-
-* Don't Fork or Clone. Instead, click the `Clone or Download` button and select `Download Zip`.
-* Unzip the project and start with the code in that folder.
-* Create a new GitHub project and push this code to the new repository.
+Technologies used: JavaScript, React-Redux, Node.js, Express, PostgreSQL, and Material-UI (a full list of dependencies can be found in `package.json`).
 
 ## Prerequisites
-
 Before you get started, make sure you have the following software installed on your computer:
 
 - [Node.js](https://nodejs.org/en/)
@@ -19,17 +12,9 @@ Before you get started, make sure you have the following software installed on y
 
 ## Create database and table
 
-Create a new database called `paytracks_database` and create a `user` table:
+Create a new database called `paytracks_database` and use create the tables listed in the database.sql file.
 
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
-
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+If you would like to name your database something else, you will need to change `paytracks_database` to the name of your new database name in `server/modules/pool.js`
 
 ## Development Setup Instructions
 
@@ -86,20 +71,6 @@ Before pushing to Heroku, run `npm run build` in terminal. This will create a bu
 * `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
 * `server/` contains the Express App
 
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-* src/components
-  * App/App
-  * Footer/Footer
-  * Nav/Nav
-  * AboutPage/AboutPage
-  * InfoPage/InfoPage
-  * UserPage/UserPage
-  * LoginPage/LoginPage
-  * RegisterPage/RegisterPage
-  * LogOutButton/LogOutButton
-  * ProtectedRoute/ProtectedRoute
-
 ## Deployment
 
 1. Create a new Heroku project
@@ -110,6 +81,8 @@ This code is also heavily commented. We recommend reading through the comments, 
 1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
 1. In the deploy section, select manual deploy
 
-## Update Documentation
+## Authors
+* John Gellert
 
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+## License
+This project is licensed under the MIT License.
