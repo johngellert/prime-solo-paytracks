@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import "./AddBusiness.css";
 
+import Swal from 'sweetalert2';
+
 // Function that checks for empty strings or null values
 // Accepts an array of values
 // Returns true if all fields are not empty
@@ -53,6 +55,10 @@ class AddBusiness extends Component {
         if (checkRequiredFields([this.state.businessName, this.state.serviceType, this.state.email])) {
             this.props.dispatch({type: 'POST_REGISTER_BUSINESS', payload: {...this.state, userId: this.props.user.id}});
             this.props.history.push('/home');
+            Swal.fire({
+                type: 'success',
+                title: 'Business Added!',
+            });
         }
         else {
             alert('Please complete all required fields OR select "Skip" to cancel adding a business!');

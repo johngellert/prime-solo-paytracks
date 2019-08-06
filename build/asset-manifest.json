@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2d3a7b1b.chunk.css",
+    "main.js": "/static/js/main.c5ab030d.chunk.js",
+    "main.js.map": "/static/js/main.c5ab030d.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/js/2.c7d449ef.chunk.js": "/static/js/2.c7d449ef.chunk.js",
+    "static/js/2.c7d449ef.chunk.js.map": "/static/js/2.c7d449ef.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.9ac6d2f8dd70f90fce1d5f895a0eac42.js": "/precache-manifest.9ac6d2f8dd70f90fce1d5f895a0eac42.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.2d3a7b1b.chunk.css.map": "/static/css/main.2d3a7b1b.chunk.css.map",
+    "static/media/400dpiLogoCropped.png": "/static/media/400dpiLogoCropped.c2b5f6be.png",
+    "static/media/LoginPage.css": "/static/media/dose-media-bU6JyhSI6zo-unsplash.8fdd35a9.jpg",
+    "static/media/small-logo.png": "/static/media/small-logo.4e9f33f3.png"
+  }
+}

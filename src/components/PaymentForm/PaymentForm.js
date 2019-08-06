@@ -260,6 +260,7 @@ class PaymentFrom extends Component {
                                 <Switch onChange={this.handleChangeSwitchCash} />
                                 {this.state.isCash && 'Cash' || 'Check'}
                             </label>
+
                             <br />
                             <label>
                                 <input
