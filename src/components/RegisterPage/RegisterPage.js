@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import "./RegisterPage.css";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -33,65 +34,67 @@ class RegisterPage extends Component {
 
   render() {
     return (
-      <Grid
-        container
-        spacing={2}
-        direction="column"
-        justify="center"
-        alignItems="center"
-      >
-        {this.props.errors.registrationMessage && (
-          <h2 className="alert" role="alert">
-            {this.props.errors.registrationMessage}
-          </h2>
-        )}
-        <Grid item xs={12} sm={6}>
-          <form onSubmit={this.registerUser}>
-            <h1>Register User</h1>
-            <div>
-              <label htmlFor="username">
-                Username:
+      <div class="register-main-container">
+        <Grid
+          container
+          spacing={2}
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          {this.props.errors.registrationMessage && (
+            <h2 className="alert" role="alert">
+              {this.props.errors.registrationMessage}
+            </h2>
+          )}
+          <Grid item xs={12} sm={6}>
+            <form onSubmit={this.registerUser}>
+              <h1>Register User</h1>
+              <div>
+                <label htmlFor="username">
+                  Username:
+                  <input
+                    type="text"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.handleInputChangeFor("username")}
+                  />
+                </label>
+              </div>
+              <div>
+                <label htmlFor="password">
+                  Password:
+                  <input
+                    type="password"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.handleInputChangeFor("password")}
+                  />
+                </label>
+              </div>
+              <div>
                 <input
-                  type="text"
-                  name="username"
-                  value={this.state.username}
-                  onChange={this.handleInputChangeFor("username")}
+                  className="register"
+                  type="submit"
+                  name="submit"
+                  value="Register"
                 />
-              </label>
-            </div>
-            <div>
-              <label htmlFor="password">
-                Password:
-                <input
-                  type="password"
-                  name="password"
-                  value={this.state.password}
-                  onChange={this.handleInputChangeFor("password")}
-                />
-              </label>
-            </div>
-            <div>
-              <input
-                className="register"
-                type="submit"
-                name="submit"
-                value="Register"
-              />
-            </div>
-          </form>
-          <center>
-            <button
-              type="button"
-              className="link-button"
-              onClick={() => {
-                this.props.dispatch({ type: "SET_TO_LOGIN_MODE" });
-              }}
-            >
-              Login
-            </button>
-          </center>
+              </div>
+            </form>
+            <center>
+              <button
+                type="button"
+                className="link-button"
+                onClick={() => {
+                  this.props.dispatch({ type: "SET_TO_LOGIN_MODE" });
+                }}
+              >
+                Login
+              </button>
+            </center>
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     );
   }
 }
