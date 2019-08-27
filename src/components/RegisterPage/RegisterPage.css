@@ -1,0 +1,29 @@
+.register-main-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #EDEEEE;
+    color: #424848;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    background-image: url('./dose-media-bU6JyhSI6zo-unsplash.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#login-form {
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%; */
+    text-align: center;
+    margin-top: 15%;
+    height: 50%;
+    width: 30%;
+    min-width: 300px;
+}
+

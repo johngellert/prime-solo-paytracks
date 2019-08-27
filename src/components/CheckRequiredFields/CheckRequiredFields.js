@@ -12,4 +12,4 @@ export default ((arrayOfFields) => {
     else {
         return false;
     }
-})
+});
