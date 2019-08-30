@@ -15,15 +15,10 @@
     background-repeat: no-repeat;
 }
 
-#login-form {
-    /* position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%; */
-    text-align: center;
-    margin-top: 15%;
-    height: 50%;
-    width: 30%;
-    min-width: 300px;
-}
+.login-form {
+    background-color: #E9E7DE;
+    border-radius: 25px;
+    height: 60%;
+    width: 70%;      
+} 
 

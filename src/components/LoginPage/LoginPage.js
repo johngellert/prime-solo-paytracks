@@ -9,7 +9,11 @@ import {
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 
+import Paper from '@material-ui/core/Paper';
+
 import smallLogo from "./400dpiLogoCropped.png";
+
+import Swal from "sweetalert2";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -66,7 +70,21 @@ class LoginPage extends Component {
 
     return (
       // <div id="login-main-container">
-      <Grid container spacing={2} direction="column" justify="center" alignItems="center" className="login-main-container">
+      <Grid
+        container
+        spacing={2}
+        direction="column"
+        justify="center"
+        alignItems="center"
+        className="login-main-container"
+      >
+        {/* {this.props.errors.loginMessage && 
+          Swal.fire({
+                type: 'error',
+                title: this.props.errors.loginMessage,
+            }).then(this.forceUpdate())
+        } */}
+
         {this.props.errors.loginMessage && (
           <h2 className="alert" role="alert">
             {this.props.errors.loginMessage}
@@ -80,7 +98,7 @@ class LoginPage extends Component {
           direction="column"
           justify="center"
           alignItems="center"
-
+          xs={11} sm={6} md={4} lg={3} xl={3}
         >
           <Grid item>
             <img className={classes.logo} src={smallLogo} />
@@ -105,6 +123,7 @@ class LoginPage extends Component {
               variant="outlined"
               value={this.state.password}
               onChange={this.handleInputChangeFor("password")}
+              fullWidth
             ></TextField>
           </Grid>
 
@@ -117,6 +136,7 @@ class LoginPage extends Component {
               value="Log In"
               color="secondary"
               variant="contained"
+              fullWidth
             >
               Login
             </Button>
@@ -129,6 +149,7 @@ class LoginPage extends Component {
               }}
               className={classes.button}
               variant="outlined"
+              fullWidth
             >
               Register
             </Button>
