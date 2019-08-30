@@ -1,6 +1,5 @@
-#login-main-container {
+.login-main-container {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #EDEEEE;
     color: #424848;
     position: fixed;
     top: 0;
@@ -13,18 +12,10 @@
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-
 }
 
-#login-form {
-    /* position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%; */
-    text-align: center;
-    margin-top: 15%;
-    height: 50%;
-    width: 30%;
-    min-width: 300px;
-}
+.login-form {
+    background-color: #E9E7DE;
+    border-radius: 25px;
+} 
 
