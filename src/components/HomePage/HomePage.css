@@ -1,7 +1,7 @@
-#home-page {
+.home-page {
     width: 70%;
-    margin-top: 5%;
-    margin-left: 15%;
+    margin-top: 8%;
+    margin-left: 110px;
     color: inherit;
     /* color: #f2f2f2; */
 }
