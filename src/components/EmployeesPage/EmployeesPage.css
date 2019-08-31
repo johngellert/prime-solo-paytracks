@@ -1,8 +1,8 @@
 
-#employees-page{
+.employees-page{
     width: 70%;
-    margin-top: 5%;
-    margin-left: 15%;
+    margin-top: 8%;
+    margin-left: 110px;
 }
 
 .each-employee-title {

@@ -85,7 +85,7 @@ class HomePage extends Component {
     const { classes } = this.props;
 
     return (
-      <div id="home-page">
+      <div className="home-page">
         {/* <div id="welcome-container">
           <div id="welcome">
             <strong>Welcome, {this.props.user.username}! </strong>

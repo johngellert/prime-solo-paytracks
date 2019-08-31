@@ -69,7 +69,7 @@ class EmployeesPage extends Component {
     
 
     return (
-      <div id="employees-page">
+      <div className="employees-page">
         <div id="employees-container">
           <h2>Your Employees</h2>
           <Button
